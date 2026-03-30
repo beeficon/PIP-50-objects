@@ -383,6 +383,8 @@ const slider = document.getElementById('timeline');
 slider.min = 0;
 slider.max = totalDays;
 slider.value = 0;
+ slider.step = 0.25;
+ 
 
 function sliderDate() {
   const ms = minDate.getTime() + (+slider.value) * 86400000;
