@@ -306,11 +306,12 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 function d(str) {
+ const FADE_DAYS = 2; // how long fade takes
   const parts = str.split('/');
   const day = +parts[0];
   const mon = +parts[1];
   const yr = +parts[2];
- const FADE_DAYS = 2; // how long fade takes
+ 
   return new Date(yr, mon - 1, day);
 }
 
