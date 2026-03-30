@@ -300,6 +300,7 @@
     <div id="map"></div>
   </div>
 </div>
+ 
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -491,12 +492,14 @@ function render() {
     const inCat  = activeCat === 'all' || obj.category === activeCat;
     const inMat  = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
 
-    if (inTime && inCat && inMat) {
-      if (!map.hasLayer(marker)) marker.addTo(map);
-      visible++;
-    } else {
-      if (map.hasLayer(marker)) marker.remove();
-    }
+ if (!map.hasLayer(marker)) marker.addTo(map);
+
+if (inTime && inCat && inMat) {
+  marker.setOpacity(1);
+  visible++;
+} else {
+  marker.setOpacity(0.2);
+}
   });
 
   document.getElementById('count-display').textContent =
