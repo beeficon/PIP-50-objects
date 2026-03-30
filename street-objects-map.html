@@ -1,15 +1,38 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Street Objects Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
 </head>
 <body>
     <h1>Street Objects Map</h1>
-    <ul>
-        <li><img src='images/object1.png' alt='Object 1'></li>
-        <li><img src='images/object2.png' alt='Object 2'></li>
-        <li><img src='images/object3.png' alt='Object 3'></li>
-        <li><img src='images/object4.png' alt='Object 4'></li>
-        <li><img src='images/object5.png' alt='Object 5'></li>
-    </ul>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var icon = L.icon({
+            iconUrl: 'path/to/your/image.png',
+            iconSize: [64, 64],
+            iconAnchor: [32, 64],
+            popupAnchor: [0, -64]
+        });
+
+        L.marker([51.5, -0.09], { icon: icon }).addTo(map)
+            .bindPopup('<b>Hello world!</b><br />I am a popup.');
+
+        // Add timeline controls and additional markers as needed
+    </script>
 </body>
 </html>
