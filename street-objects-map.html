@@ -265,6 +265,10 @@
     object-fit: contain;
     border-radius: 12px;
   }
+
+ onst FADE_DAYS = 2; // how long fade takes
+ }
+ 
 </style>
 </head>
 <body>
@@ -487,20 +491,43 @@ function render() {
   document.getElementById('date-display').textContent = formatDate(current);
 
   let visible = 0;
-  markerData.forEach(({ marker, obj }) => {
-    const inTime = obj.found <= current && obj.missing > current;
-    const inCat  = activeCat === 'all' || obj.category === activeCat;
-    const inMat  = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
+markerData.forEach(({ marker, obj }) => {
+  const current = sliderDate();
 
- if (!map.hasLayer(marker)) marker.addTo(map);
+  const startFadeIn = obj.found;
+  const endFadeIn = new Date(obj.found.getTime() + FADE_DAYS * 86400000);
 
-if (inTime && inCat && inMat) {
-  marker.setOpacity(1);
-  visible++;
-} else {
-  marker.setOpacity(0.2);
-}
-  });
+  const startFadeOut = new Date(obj.missing.getTime() - FADE_DAYS * 86400000);
+  const endFadeOut = obj.missing;
+
+  let opacity = 0;
+
+  // Fade in
+  if (current >= startFadeIn && current < endFadeIn) {
+    opacity = (current - startFadeIn) / (endFadeIn - startFadeIn);
+  }
+  // Fully visible
+  else if (current >= endFadeIn && current <= startFadeOut) {
+    opacity = 1;
+  }
+  // Fade out
+  else if (current > startFadeOut && current <= endFadeOut) {
+    opacity = 1 - (current - startFadeOut) / (endFadeOut - startFadeOut);
+  }
+
+  // Apply filters
+  const inCat = activeCat === 'all' || obj.category === activeCat;
+  const inMat = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
+
+  if (!map.hasLayer(marker)) marker.addTo(map);
+
+  if (inCat && inMat) {
+    marker.setOpacity(opacity);
+    if (opacity > 0.95) visible++;
+  } else {
+    marker.setOpacity(0);
+  }
+});
 
   document.getElementById('count-display').textContent =
     `${visible} object${visible !== 1 ? 's' : ''} visible`;
