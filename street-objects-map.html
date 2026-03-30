@@ -258,6 +258,7 @@
     border-radius: 50%;
     transition: all 0.15s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
   }
   .map-marker:hover {
     transform: scale(1.1);
@@ -267,6 +268,8 @@
     max-width: 40px;
     max-height: 40px;
     object-fit: contain;
+    width: auto;
+    height: auto;
   }
 </style>
 </head>
@@ -304,20 +307,33 @@
   </div>
 </div>
 
-    <head>
+ <html>
+<head>
     <style>
         .marker {
-            width: 40px;
-            height: 40px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff; /* Adjust as necessary for design */
+        }
+        .marker img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
     </style>
 </head>
 <body>
-    <div id="map">
-        <img src="marker.png" class="marker" alt="Map Marker">
+    <div class="marker">
+        <img src="your-marker-image-source.jpg" alt="Marker Image">
     </div>
 </body>
+</html>
+
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
