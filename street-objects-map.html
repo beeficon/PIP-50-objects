@@ -265,9 +265,6 @@
     object-fit: contain;
     border-radius: 12px;
   }
-
- onst FADE_DAYS = 2; // how long fade takes
- }
  
 </style>
 </head>
@@ -313,6 +310,7 @@ function d(str) {
   const day = +parts[0];
   const mon = +parts[1];
   const yr = +parts[2];
+ const FADE_DAYS = 2; // how long fade takes
   return new Date(yr, mon - 1, day);
 }
 
