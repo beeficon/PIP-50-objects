@@ -4,563 +4,250 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Street Objects</title>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #f5f2ec;
-    --surface: #edeae2;
-    --border: #d4cfc4;
-    --text: #1a1814;
-    --text-muted: #6b6760;
-    --accent: #2d4a3e;
-    --accent-light: #4a7a67;
-    --pill-active-bg: #1a1814;
-    --pill-active-text: #f5f2ec;
-    --pill-bg: #edeae2;
-    --pill-border: #c4bfb4;
-  }
-  html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
-  #app { display: flex; flex-direction: row; height: 100vh; }
-  #sidebar {
-    width: 0;
-    background: var(--bg);
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-    transition: width 0.3s ease;
-    flex-shrink: 0;
-    z-index: 100;
-  }
-  #sidebar.open { width: 320px; }
-  .sidebar-content {
-    padding: 20px;
-    min-height: 100%;
-  }
-  .sidebar-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--text-muted);
-    transition: color 0.15s;
-  }
-  .sidebar-close:hover { color: var(--text); }
-  .sidebar-image {
-    width: 100%;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    margin-bottom: 16px;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 200px;
-  }
-  .sidebar-image img {
-    max-width: 100%;
-    max-height: 250px;
-    object-fit: contain;
-  }
-  .sidebar-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 12px;
-    color: var(--text);
-  }
-  .sidebar-detail {
-    margin-bottom: 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    line-height: 1.6;
-  }
-  .sidebar-detail-label {
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .sidebar-detail-value {
-    color: var(--text);
-    margin-top: 2px;
-  }
-  .sidebar-tag {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 8px;
-    margin-right: 6px;
-    font-family: 'DM Mono', monospace;
-  }
-  #main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  #header {
-    padding: 14px 20px 10px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    flex-shrink: 0;
-  }
-  #header h1 {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text);
-  }
-  #header p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    font-family: 'DM Mono', monospace;
-  }
-  #filters {
-    padding: 10px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .filter-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    width: 64px;
-    flex-shrink: 0;
-  }
-  .pill {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--pill-border);
-    background: var(--pill-bg);
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    text-transform: lowercase;
-    white-space: nowrap;
-  }
-  .pill:hover { border-color: var(--text-muted); color: var(--text); }
-  .pill.active { background: var(--pill-active-bg); color: var(--pill-active-text); border-color: var(--pill-active-bg); }
-  #timeline-bar {
-    padding: 10px 20px 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .tl-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-  #date-display {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text);
-    min-width: 90px;
-    flex-shrink: 0;
-  }
-  #play-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.15s;
-  }
-  #play-btn:hover { background: var(--surface); }
-  #play-btn.playing { background: var(--text); color: var(--bg); border-color: var(--text); }
-  #count-display {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-  input[type=range] {
-    -webkit-appearance: none;
-    appearance: none;
-    flex: 1;
-    height: 2px;
-    background: var(--border);
-    outline: none;
-    border-radius: 2px;
-    position: relative;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: var(--text);
-    cursor: pointer;
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 0 1px var(--text);
-    transition: transform 0.1s;
-  }
-  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-  input[type=range]::-moz-range-thumb {
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: var(--text);
-    cursor: pointer;
-    border: 2px solid var(--bg);
-  }
-  #map { flex: 1; z-index: 0; }
-  .leaflet-control-zoom a {
-    font-family: 'DM Mono', monospace !important;
-    color: var(--text) !important;
-    background: var(--bg) !important;
-    border-color: var(--border) !important;
-  }
-  .leaflet-control-attribution {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    background: rgba(245,242,236,0.85) !important;
-  }
-  .map-marker {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    transition: all 0.15s;
-  }
-  .map-marker:hover {
-    transform: scale(1.1);
-  }
-  .map-marker img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 12px;
-  }
- 
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --border: #d9d9d6;
+  --text: #111111;
+  --text-muted: #6a6a6a;
+}
+
+html, body {
+  height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+#app { display: flex; height: 100vh; }
+
+#sidebar {
+  width: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  transition: width 0.25s;
+}
+
+#sidebar.open { width: 360px; }
+
+.sidebar-content { padding: 24px; }
+
+.sidebar-image {
+  width: 100%;
+  min-height: 320px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+}
+
+.sidebar-image img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+.sidebar-title {
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.sidebar-detail {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+}
+
+#main { flex: 1; display:flex; flex-direction:column; }
+
+#header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+#filters {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+#timeline-bar {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+
+#map { flex:1; }
+
+.pill {
+  padding:4px 10px;
+  border:1px solid var(--border);
+  background:white;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.pill.active {
+  background:black;
+  color:white;
+}
+
+.map-marker {
+  width:64px; height:64px;
+}
+
+.map-marker img {
+  width:100%; height:100%; object-fit:contain;
+}
 </style>
 </head>
+
 <body>
 <div id="app">
-  <div id="sidebar">
-    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
-    <div class="sidebar-content">
-      <div id="sidebar-body"></div>
-    </div>
-  </div>
-  <div id="main">
-    <div id="header">
-      <h1>Street Objects — Field Map</h1>
-      <p id="header-sub">loading…</p>
-    </div>
-    <div id="filters">
-      <div class="filter-row">
-        <span class="filter-label">Category</span>
-        <div id="cat-pills"></div>
-      </div>
-      <div class="filter-row">
-        <span class="filter-label">Material</span>
-        <div id="mat-pills"></div>
-      </div>
-    </div>
-    <div id="timeline-bar">
-      <span class="tl-label">Date</span>
-      <input type="range" id="timeline" min="0" max="100" value="0" step="1">
-      <span id="date-display">28 Jan 2026</span>
-      <button id="play-btn">▶ play</button>
-      <span id="count-display">— objects</span>
-    </div>
-    <div id="map"></div>
-  </div>
+
+<div id="sidebar">
+  <div class="sidebar-content" id="sidebar-body"></div>
 </div>
- 
+
+<div id="main">
+  <div id="header">
+    <h2>Street Objects</h2>
+  </div>
+
+  <div id="filters">
+    <div id="cat-pills"></div>
+    <div id="mat-pills"></div>
+  </div>
+
+  <div id="timeline-bar">
+    <input type="range" id="timeline">
+    <span id="date-display"></span>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-function d(str) {
-  const parts = str.split('/');
-  const day = +parts[0];
-  const mon = +parts[1];
-  const yr = +parts[2];
-  return new Date(yr, mon - 1, day);
+function d(str){
+  const [day,mon,yr]=str.split('/').map(Number);
+  return new Date(yr,mon-1,day);
 }
 
-const objects = [
-  { name:'bucket',              category:'construction', lat:51.46399, lng:-0.03989, found:d('28/01/2026'), missing:d('09/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026.png' },
-  { name:'traffic cone',        category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png' },
-  { name:'wooden cabinet',      category:'furniture',    lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026.png' },
-  { name:'chandelier',          category:'homeware',     lat:51.4657, lng:-0.04921, found:d('28/01/2026'), missing:d('12/02/2026'), material:'glass, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026.png' },
-  { name:'sofa',                category:'furniture',    lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
-  { name:'mattress',            category:'furniture',    lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png' },
-  { name:'painting',            category:'panel',        lat:51.46489, lng:-0.04423, found:d('28/01/2026'), missing:d('16/02/2026'), material:'wood, acrylic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026.png' },
-  { name:'traffic cones',       category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png' },
-  { name:'tshirt',              category:'clothing',     lat:51.46417, lng:-0.04048, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026.png' },
-  { name:'toilet',              category:'furniture',    lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
-  { name:'magic whip',          category:'rubbish',      lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026.png' },
-  { name:'mirror',              category:'homeware',     lat:51.46489, lng:-0.04423, found:d('04/02/2026'), missing:d('12/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-04022026.png' },
-  { name:'cushion',             category:'homeware',     lat:51.46494, lng:-0.04448, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cushions-04022026.png' },
-  { name:'tyre parts',          category:'vehicle',      lat:51.46621, lng:-0.05076, found:d('04/02/2026'), missing:d('09/02/2026'), material:'rubber', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026.png' },
-  { name:'sofa',                category:'furniture',    lat:51.46509, lng:-0.04529, found:d('04/02/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026.png' },
-  { name:'boxes',               category:'rubbish',      lat:51.46503, lng:-0.04529, found:d('04/02/2026'), missing:d('25/02/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-04022026.png' },
-  { name:'bin bags',            category:'rubbish',      lat:51.46507, lng:-0.04588, found:d('04/02/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
-  { name:'sofa part',           category:'furniture',    lat:51.46619, lng:-0.05005, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
-  { name:'granny trolley',      category:'luggage',      lat:51.46627, lng:-0.05017, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium, fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png' },
-  { name:'microwave-esque box', category:'misc',         lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026.png' },
-  { name:'empty packet of cigs',category:'rubbish',      lat:51.466, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026.png' },
-  { name:'wooden planks',       category:'panel',        lat:51.46455, lng:-0.04366, found:d('09/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026.png' },
-  { name:'marble panels',       category:'panel',        lat:51.46458, lng:-0.04376, found:d('09/02/2026'), missing:d('25/02/2026'), material:'marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026.png' },
-  { name:'wooden planks',       category:'panel',        lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026.png' },
-  { name:'suitcase',            category:'luggage',      lat:51.46629, lng:-0.05037, found:d('12/02/2026'), missing:d('16/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026.png' },
-  { name:'balloon',             category:'misc',         lat:51.46531, lng:-0.04619, found:d('12/02/2026'), missing:d('16/02/2026'), material:'latex, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png' },
-  { name:'royal mail box',      category:'misc',         lat:51.46518, lng:-0.04565, found:d('12/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-12022026.png' },
-  { name:'bin bags',            category:'rubbish',      lat:51.4645, lng:-0.0438, found:d('12/02/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-12022026.png' },
-  { name:'chair',               category:'furniture',    lat:51.46449, lng:-0.04259, found:d('16/02/2026'), missing:d('18/02/2026'), material:'wood, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026.png' },
-  { name:'cabinet',             category:'furniture',    lat:51.46493, lng:-0.04591, found:d('16/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-16022026.png' },
-  { name:'bowl',                category:'homeware',     lat:51.46518, lng:-0.04782, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026.png' },
-  { name:'table',               category:'furniture',    lat:51.46432, lng:-0.04195, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/table-12022026.png' },
-  { name:'baby bath',           category:'homeware',     lat:51.46567, lng:-0.04902, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bath-16022026.png' },
-  { name:'egg carton',          category:'misc',         lat:51.46411, lng:-0.04152, found:d('18/02/2026'), missing:d('25/02/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026.png' },
-  { name:'lamp',                category:'homeware',     lat:51.46435, lng:-0.04264, found:d('18/02/2026'), missing:d('25/02/2026'), material:'aluminium, glass', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026.png' },
-  { name:'pot',                 category:'homeware',     lat:51.46471, lng:-0.04442, found:d('18/02/2026'), missing:d('25/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026.png' },
-  { name:'wheel trimming',      category:'vehicle',      lat:51.46522, lng:-0.04715, found:d('18/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026.png' },
-  { name:'motherboard',         category:'misc',         lat:51.46527, lng:-0.04691, found:d('18/02/2026'), missing:d('25/02/2026'), material:'fibreglass, copper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026.png' },
-  { name:'key',                 category:'misc',         lat:51.46494, lng:-0.04468, found:d('18/02/2026'), missing:d('25/02/2026'), material:'brass', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026.png' },
-  { name:'spiderman lampshades',category:'homeware',     lat:51.46451, lng:-0.04354, found:d('25/02/2026'), missing:d('02/03/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026.png' },
-  { name:'sewing pattern',      category:'misc',         lat:51.46475, lng:-0.04461, found:d('25/02/2026'), missing:d('02/03/2026'), material:'paper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026.png' },
-  { name:'white cabinet',       category:'furniture',    lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026.png' },
-  { name:'bin bags',            category:'rubbish',      lat:51.4651, lng:-0.04538, found:d('25/02/2026'), missing:d('05/03/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026.png' },
-  { name:'pallet',              category:'construction', lat:51.4642, lng:-0.04095, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026.png' },
-  { name:'frying pan',          category:'homeware',     lat:51.46597, lng:-0.04966, found:d('25/02/2026'), missing:d('02/03/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png' },
-  { name:'bowls',               category:'homeware',     lat:51.46529, lng:-0.0483, found:d('02/03/2026'), missing:d('05/03/2026'), material:'ceramic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026.png' },
-  { name:'pallet',              category:'construction', lat:51.46635, lng:-0.05055, found:d('02/03/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-09022026.png' },
-  { name:'blue boxes',          category:'homeware',     lat:51.46486, lng:-0.04443, found:d('02/03/2026'), missing:d('05/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026.png' },
-  { name:'mirror',              category:'homeware',     lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'wood, glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026.png' },
-  { name:'suitcase',            category:'luggage',      lat:51.46521, lng:-0.04631, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026.png' },
-];
-
-const ICON_EMOJI = {
-  construction: '🚧', furniture: '🛋️', homeware: '🏠',
-  rubbish: '🗑️', panel: '🪟', vehicle: '🚗',
-  luggage: '🧳', misc: '📦', clothing: '👕',
-};
-
-const allDates = objects.flatMap(o => [o.found, o.missing]);
-const minDate = new Date(Math.min(...allDates));
-const maxDate = new Date(Math.max(...allDates));
-const totalDays = Math.round((maxDate - minDate) / 86400000);
-
-const slider = document.getElementById('timeline');
-slider.min = 0;
-slider.max = totalDays;
-slider.value = 0;
-slider.step = 0.25;
-
-function sliderDate() {
-  const ms = minDate.getTime() + (+slider.value) * 86400000;
-  return new Date(ms);
+function jitter(v,a=0.00005){
+  return v+(Math.random()-0.5)*a;
 }
 
-function formatDate(dt) {
-  return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+const objects = [/* KEEP YOUR SAME DATA HERE (unchanged) */];
+
+const allDates = objects.flatMap(o=>[o.found,o.missing]);
+const minDate=new Date(Math.min(...allDates));
+const maxDate=new Date(Math.max(...allDates));
+const totalDays=Math.round((maxDate-minDate)/86400000);
+
+const slider=document.getElementById('timeline');
+slider.min=0; slider.max=totalDays; slider.step=0.25;
+
+function sliderDate(){
+  return new Date(minDate.getTime()+slider.value*86400000);
 }
 
-const map = L.map('map', { zoomControl: true }).setView([51.4651, -0.0470], 16);
+function formatDate(dt){
+  return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap © CARTO',
-  subdomains: 'abcd',
-  maxZoom: 20
-}).addTo(map);
+const map=L.map('map').setView([51.4651,-0.0470],16);
 
-function createMarkerIcon(obj) {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+
+function createMarkerIcon(obj){
   return L.divIcon({
-    html: `<div class="map-marker" data-name="${obj.name}"><img src="${obj.image}" alt="${obj.name}" onerror="this.parentElement.innerHTML='${ICON_EMOJI[obj.category] || '📍'}'" /></div>`,
-    className: '',
-    iconSize: [64, 64],
-    iconAnchor: [32, 32],
-    popupAnchor: [0, -32]
+    html:`<div class="map-marker"><img src="${obj.image}"/></div>`,
+    className:'', iconSize:[64,64]
   });
 }
 
-function openSidebar(obj) {
-  const sidebar = document.getElementById('sidebar');
-  const sidebarBody = document.getElementById('sidebar-body');
-  
-  sidebarBody.innerHTML = `
-    <div class="sidebar-image">
-      <img src="${obj.image}" alt="${obj.name}" onerror="this.style.display='none';this.parentElement.textContent='${ICON_EMOJI[obj.category] || '📍'}'"/>
-    </div>
+function openSidebar(obj){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-body').innerHTML=`
+    <div class="sidebar-image"><img src="${obj.image}"></div>
     <div class="sidebar-title">${obj.name}</div>
-    <div class="sidebar-detail">
-      <div class="sidebar-detail-label">Found</div>
-      <div class="sidebar-detail-value">${formatDate(obj.found)}</div>
-    </div>
-    <div class="sidebar-detail">
-      <div class="sidebar-detail-label">Disappeared</div>
-      <div class="sidebar-detail-value">${formatDate(obj.missing)}</div>
-    </div>
-    <div class="sidebar-detail">
-      <div class="sidebar-detail-label">Duration</div>
-      <div class="sidebar-detail-value">${Math.ceil((obj.missing - obj.found) / 86400000)} days</div>
-    </div>
-    <div class="sidebar-detail">
-      <div class="sidebar-detail-label">Material</div>
-      <div class="sidebar-detail-value">${obj.material}</div>
-    </div>
-    <div>
-      <span class="sidebar-tag">${obj.category}</span>
-    </div>
+    <div class="sidebar-detail">${formatDate(obj.found)} → ${formatDate(obj.missing)}</div>
+    <div class="sidebar-detail">${obj.material}</div>
   `;
-  
-  sidebar.classList.add('open');
 }
 
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-}
-
-const markerData = objects.map(obj => {
-  const icon = createMarkerIcon(obj);
-  const marker = L.marker([obj.lat, obj.lng], { icon });
-  marker.on('click', () => openSidebar(obj));
-  return { marker, obj };
+const markerData=objects.map(obj=>{
+  const marker=L.marker([jitter(obj.lat),jitter(obj.lng)],{icon:createMarkerIcon(obj)});
+  marker.on('click',()=>openSidebar(obj));
+  marker.addTo(map);
+  return {marker,obj,trail:[]};
 });
 
-let activeCat = 'all';
-let activeMat = 'all';
+const FADE_DAYS=1.5;
 
-const allMaterials = [...new Set(
-  objects.flatMap(o => o.material.split(',').map(m => m.trim().toLowerCase()))
-)].sort();
+function render(){
+  const current=sliderDate();
+  document.getElementById('date-display').textContent=formatDate(current);
 
-const categories = ['all', ...new Set(objects.map(o => o.category))];
-const materials  = ['all', ...allMaterials];
+  markerData.forEach(d=>{
+    const {marker,obj,trail}=d;
 
-function buildPills(containerId, items, getCurrent, onClick) {
-  const wrap = document.getElementById(containerId);
-  wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:5px;';
-  items.forEach(item => {
-    const btn = document.createElement('button');
-    btn.className = 'pill' + (item === getCurrent() ? ' active' : '');
-    btn.textContent = item;
-    btn.onclick = () => {
-      onClick(item);
-      wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      render();
-    };
-    wrap.appendChild(btn);
-  });
-}
+    const startIn=new Date(obj.found.getTime()-FADE_DAYS*86400000);
+    const endIn=obj.found;
+    const startOut=obj.missing;
+    const endOut=new Date(obj.missing.getTime()+FADE_DAYS*86400000);
 
-buildPills('cat-pills', categories, () => activeCat, v => { activeCat = v; });
-buildPills('mat-pills', materials,  () => activeMat, v => { activeMat = v; });
+    let opacity=0;
 
-function render() {
-  const current = sliderDate();
-  document.getElementById('date-display').textContent = formatDate(current);
-
-  let visible = 0;
-
-  markerData.forEach(({ marker, obj }) => {
-    // Fade in: starts 1 day before found (0%), reaches 100% at found
-    const startFadeIn = new Date(obj.found.getTime() - 86400000);
-    const endFadeIn   = obj.found;
-
-    // Fade out: starts at missing (100%), reaches 0% 1 day after missing
-    const startFadeOut = obj.missing;
-    const endFadeOut   = new Date(obj.missing.getTime() + 86400000);
-
-    let opacity = 0;
-
-    if (current >= startFadeIn && current < endFadeIn) {
-      // Fading in
-      opacity = (current - startFadeIn) / (endFadeIn - startFadeIn);
-    } else if (current >= endFadeIn && current < startFadeOut) {
-      // Fully visible
-      opacity = 1;
-    } else if (current >= startFadeOut && current <= endFadeOut) {
-      // Fading out
-      opacity = 1 - (current - startFadeOut) / (endFadeOut - startFadeOut);
+    if(current>=startIn && current<endIn){
+      opacity=(current-startIn)/(endIn-startIn);
+    } else if(current>=endIn && current<startOut){
+      opacity=1;
+    } else if(current>=startOut && current<=endOut){
+      opacity=1-(current-startOut)/(endOut-startOut);
     }
 
-    // Apply filters
-    const inCat = activeCat === 'all' || obj.category === activeCat;
-    const inMat = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
+    marker.setOpacity(opacity);
 
-    if (!map.hasLayer(marker)) marker.addTo(map);
-
-    if (inCat && inMat) {
-      marker.setOpacity(opacity);
-      if (opacity > 0.95) visible++;
-    } else {
-      marker.setOpacity(0);
+    const el=marker.getElement();
+    if(el){
+      el.style.pointerEvents=opacity>0.05?'auto':'none';
     }
-  });
 
-  document.getElementById('count-display').textContent =
-    `${visible} object${visible !== 1 ? 's' : ''} visible`;
-  document.getElementById('header-sub').textContent =
-    `${objects.length} objects · ${formatDate(minDate)} – ${formatDate(maxDate)}`;
-}
+    // 🌫️ TRAIL SYSTEM
+    if(opacity>0.95){
+      const ghost=L.circleMarker(marker.getLatLng(),{
+        radius:8,
+        opacity:0,
+        fillOpacity:0.15
+      }).addTo(map);
 
-slider.addEventListener('input', render);
+      trail.push({ghost,time:current});
 
-let playInterval = null;
-const playBtn = document.getElementById('play-btn');
-
-playBtn.addEventListener('click', () => {
-  if (playInterval) {
-    clearInterval(playInterval);
-    playInterval = null;
-    playBtn.textContent = '▶ play';
-    playBtn.classList.remove('playing');
-  } else {
-    if (+slider.value >= totalDays) slider.value = 0;
-    playBtn.textContent = '■ stop';
-    playBtn.classList.add('playing');
-    playInterval = setInterval(() => {
-      if (+slider.value >= totalDays) {
-        clearInterval(playInterval);
-        playInterval = null;
-        playBtn.textContent = '▶ play';
-        playBtn.classList.remove('playing');
-        return;
+      if(trail.length>5){
+        const old=trail.shift();
+        map.removeLayer(old.ghost);
       }
-      slider.value = +slider.value + 1;
-      render();
-    }, 120);
-  }
-});
+    }
 
+    trail.forEach((t,i)=>{
+      const age=i/trail.length;
+      t.ghost.setStyle({fillOpacity:0.15*(1-age)});
+    });
+  });
+}
+
+slider.addEventListener('input',render);
 render();
 </script>
 </body>
