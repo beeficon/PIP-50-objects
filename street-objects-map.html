@@ -310,7 +310,6 @@ function d(str) {
   const day = +parts[0];
   const mon = +parts[1];
   const yr = +parts[2];
- 
   return new Date(yr, mon - 1, day);
 }
 
@@ -322,7 +321,7 @@ const objects = [
   { name:'sofa',                category:'furniture',    lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
   { name:'mattress',            category:'furniture',    lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png' },
   { name:'painting',            category:'panel',        lat:51.46489, lng:-0.04423, found:d('28/01/2026'), missing:d('16/02/2026'), material:'wood, acrylic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026.png' },
-  { name:'traffic cones',        category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png' },
+  { name:'traffic cones',       category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png' },
   { name:'tshirt',              category:'clothing',     lat:51.46417, lng:-0.04048, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026.png' },
   { name:'toilet',              category:'furniture',    lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
   { name:'magic whip',          category:'rubbish',      lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026.png' },
@@ -382,8 +381,7 @@ const slider = document.getElementById('timeline');
 slider.min = 0;
 slider.max = totalDays;
 slider.value = 0;
- slider.step = 0.25;
- 
+slider.step = 0.25;
 
 function sliderDate() {
   const ms = minDate.getTime() + (+slider.value) * 86400000;
@@ -491,24 +489,42 @@ function render() {
   document.getElementById('date-display').textContent = formatDate(current);
 
   let visible = 0;
-markerData.forEach(({ marker, obj }) => {
-  const current = sliderDate();
 
-  }
+  markerData.forEach(({ marker, obj }) => {
+    // Fade in: starts 1 day before found (0%), reaches 100% at found
+    const startFadeIn = new Date(obj.found.getTime() - 86400000);
+    const endFadeIn   = obj.found;
 
-  // Apply filters
-  const inCat = activeCat === 'all' || obj.category === activeCat;
-  const inMat = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
+    // Fade out: starts at missing (100%), reaches 0% 1 day after missing
+    const startFadeOut = obj.missing;
+    const endFadeOut   = new Date(obj.missing.getTime() + 86400000);
 
-  if (!map.hasLayer(marker)) marker.addTo(map);
+    let opacity = 0;
 
-  if (inCat && inMat) {
-    marker.setOpacity(opacity);
-    if (opacity > 0.95) visible++;
-  } else {
-    marker.setOpacity(0);
-  }
-});
+    if (current >= startFadeIn && current < endFadeIn) {
+      // Fading in
+      opacity = (current - startFadeIn) / (endFadeIn - startFadeIn);
+    } else if (current >= endFadeIn && current < startFadeOut) {
+      // Fully visible
+      opacity = 1;
+    } else if (current >= startFadeOut && current <= endFadeOut) {
+      // Fading out
+      opacity = 1 - (current - startFadeOut) / (endFadeOut - startFadeOut);
+    }
+
+    // Apply filters
+    const inCat = activeCat === 'all' || obj.category === activeCat;
+    const inMat = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
+
+    if (!map.hasLayer(marker)) marker.addTo(map);
+
+    if (inCat && inMat) {
+      marker.setOpacity(opacity);
+      if (opacity > 0.95) visible++;
+    } else {
+      marker.setOpacity(0);
+    }
+  });
 
   document.getElementById('count-display').textContent =
     `${visible} object${visible !== 1 ? 's' : ''} visible`;
