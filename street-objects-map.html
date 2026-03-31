@@ -306,7 +306,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 function d(str) {
- const FADE_DAYS = 2; // how long fade takes
   const parts = str.split('/');
   const day = +parts[0];
   const mon = +parts[1];
@@ -495,25 +494,6 @@ function render() {
 markerData.forEach(({ marker, obj }) => {
   const current = sliderDate();
 
-  const startFadeIn = obj.found;
-  const endFadeIn = new Date(obj.found.getTime() + FADE_DAYS * 86400000);
-
-  const startFadeOut = new Date(obj.missing.getTime() - FADE_DAYS * 86400000);
-  const endFadeOut = obj.missing;
-
-  let opacity = 0;
-
-  // Fade in
-  if (current >= startFadeIn && current < endFadeIn) {
-    opacity = (current - startFadeIn) / (endFadeIn - startFadeIn);
-  }
-  // Fully visible
-  else if (current >= endFadeIn && current <= startFadeOut) {
-    opacity = 1;
-  }
-  // Fade out
-  else if (current > startFadeOut && current <= endFadeOut) {
-    opacity = 1 - (current - startFadeOut) / (endFadeOut - startFadeOut);
   }
 
   // Apply filters
