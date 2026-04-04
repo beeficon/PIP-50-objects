@@ -6,6 +6,7 @@
 <title>Street Objects</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,28 +31,15 @@
     border-right: 1px solid var(--border);
     overflow-y: auto;
     transition: width 0.4s ease;
-    flex-shrink: 5;
+    flex-shrink: 0;
     z-index: 100;
-`}
-    .sidebar-collapse {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer; 
-  color: var(--text-muted);
-  transition: color 0.15s;
-  z-index: 101;
-
-
-.sidebar-collapse:hover { color: var(--text); }
+    position: relative;
   }
   #sidebar.open { width: 400px; }
   .sidebar-content {
     padding: 30px;
     min-height: 100%;
+    min-width: 400px;
   }
   .sidebar-close {
     position: absolute;
@@ -68,17 +56,15 @@
   .sidebar-image {
     width: 100%;
     border-radius: 6px;
-    border: 5px
     margin-bottom: 15px;
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 200px;
-
   }
   .sidebar-image img {
-     margin-top: 30px;
+    margin-top: 30px;
     max-width: 100%;
     max-height: 500px;
     object-fit: contain;
@@ -106,8 +92,6 @@
     color: var(--text);
     margin-top: 2px;
   }
-
-  
   .sidebar-tag {
     display: inline-block;
     padding: 4px 10px;
@@ -118,25 +102,6 @@
     margin-top: 8px;
     margin-right: 6px;
     font-family: 'DM Mono', monospace;
-
-
-  <button class="sidebar-collapse" onclick="closeSidebar()">⇦</button><var></var>
-
-  .sidebar-collapse {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: var(--text-muted);
-  transition: color 0.15s;
-  z-index: 101; /* Make sure it's above other elements */
-}
-
-.sidebar-collapse:hover { color: var(--text); }
-
   }
   #main {
     flex: 1;
@@ -151,7 +116,7 @@
     flex-shrink: 0;
   }
   #header h1 {
-     font-family: 'DM Sans', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 75px;
     font-weight: 700;
     text-transform: uppercase;
@@ -292,7 +257,8 @@
     width: 64px;
     height: 64px;
     border-radius: 12px;
-    transition: all 0.15s;
+    opacity: 0;
+    transition: opacity 3s ease;
   }
   .map-marker:hover {
     transform: scale(1.5);
@@ -303,24 +269,20 @@
     object-fit: contain;
     border-radius: 12px;
   }
-<head>
-  ...
-  <style>
-    .fade-in {
-      opacity: 1;
-      transition: opacity 3s ease-in;
-    }
-    .fade-out {
-      opacity: 0;
-      transition: opacity 3s ease-out;
-    }
-  </style>
+  .fade-in {
+    opacity: 1;
+    transition: opacity 3s ease-in;
+  }
+  .fade-out {
+    opacity: 0;
+    transition: opacity 3s ease-out;
+  }
+</style>
 </head>
 <body>
 <div id="app">
   <div id="sidebar">
     <button class="sidebar-close" onclick="closeSidebar()">✕</button>
-<button class="sidebar-collapse" onclick="closeSidebar()">⇦</button>
     <div class="sidebar-content">
       <div id="sidebar-body"></div>
     </div>
@@ -348,7 +310,6 @@
       <span id="count-display">— objects</span>
     </div>
     <div id="map"></div>
-
   </div>
 </div>
 
@@ -370,7 +331,7 @@ const objects = [
   { name:'sofa',                category:'furniture',    lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
   { name:'mattress',            category:'furniture',    lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png' },
   { name:'painting',            category:'panel',        lat:51.46489, lng:-0.04423, found:d('28/01/2026'), missing:d('16/02/2026'), material:'wood, acrylic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026.png' },
-  { name:'traffic cones',        category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png' },
+  { name:'traffic cones',       category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png' },
   { name:'tshirt',              category:'clothing',     lat:51.46417, lng:-0.04048, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026.png' },
   { name:'toilet',              category:'furniture',    lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
   { name:'magic whip',          category:'rubbish',      lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026.png' },
@@ -393,7 +354,7 @@ const objects = [
   { name:'bin bags',            category:'rubbish',      lat:51.4645, lng:-0.0438, found:d('12/02/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-12022026.png' },
   { name:'chair',               category:'furniture',    lat:51.46449, lng:-0.04259, found:d('16/02/2026'), missing:d('18/02/2026'), material:'wood, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026.png' },
   { name:'cabinet',             category:'furniture',    lat:51.46493, lng:-0.04591, found:d('16/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-16022026.png' },
-  { name:'bowl',                category:'homeware',     lat:51.46518, lng:-0.04782, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026.png'},
+  { name:'bowl',                category:'homeware',     lat:51.46518, lng:-0.04782, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026.png' },
   { name:'table',               category:'furniture',    lat:51.46432, lng:-0.04195, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/table-12022026.png' },
   { name:'baby bath',           category:'homeware',     lat:51.46567, lng:-0.04902, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bath-16022026.png' },
   { name:'egg carton',          category:'misc',         lat:51.46411, lng:-0.04152, found:d('18/02/2026'), missing:d('25/02/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026.png' },
@@ -459,9 +420,8 @@ function createMarkerIcon(obj) {
 }
 
 function openSidebar(obj) {
-  const sidebar = document.getElementById('sidebar');
   const sidebarBody = document.getElementById('sidebar-body');
-  
+
   sidebarBody.innerHTML = `
     <div class="sidebar-image">
       <img src="${obj.image}" alt="${obj.name}" onerror="this.style.display='none';this.parentElement.textContent='${ICON_EMOJI[obj.category] || '📍'}'"/>
@@ -484,8 +444,8 @@ function openSidebar(obj) {
       <span class="sidebar-tag">${obj.material}</span>
     </div>
   `;
-  
-  sidebar.classList.add('open');
+
+  document.getElementById('sidebar').classList.add('open');
 }
 
 function closeSidebar() {
@@ -495,13 +455,6 @@ function closeSidebar() {
 const markerData = objects.map(obj => {
   const icon = createMarkerIcon(obj);
   const marker = L.marker([obj.lat, obj.lng], { icon });
-  
-  // When the marker is added to the map, find and assign its DOM element
-  marker.on('add', () => {
-    const markerEl = document.querySelector(`.leaflet-marker-icon[data-name="${obj.name}"]`);
-    obj.element = markerEl; // Store for fade effect
-  });
-  
   marker.on('click', () => openSidebar(obj));
   return { marker, obj };
 });
@@ -549,25 +502,26 @@ function render() {
     if (inTime && inCat && inMat) {
       if (!map.hasLayer(marker)) {
         marker.addTo(map);
-        // Fade in
-        if (obj.element) {
-          obj.element.classList.remove('fade-out');
-          obj.element.classList.add('fade-in');
-        }
+        requestAnimationFrame(() => {
+          const el = document.querySelector(`.map-marker[data-name="${obj.name}"]`);
+          if (el) {
+            el.classList.remove('fade-out');
+            el.classList.add('fade-in');
+            obj.element = el;
+          }
+        });
       }
       visible++;
     } else {
       if (map.hasLayer(marker)) {
-        // Fade out
         if (obj.element) {
           obj.element.classList.remove('fade-in');
           obj.element.classList.add('fade-out');
-          // Remove marker after fade-out
           setTimeout(() => {
             if (map.hasLayer(marker)) {
               marker.remove();
             }
-          }, 3000); // duration matches CSS transition
+          }, 3000);
         } else {
           marker.remove();
         }
@@ -575,7 +529,7 @@ function render() {
     }
   });
 
-document.getElementById('count-display').textContent = `${visible} objects`;
+  document.getElementById('count-display').textContent = `${visible} objects`;
   document.getElementById('header-sub').textContent =
     `${objects.length} objects · ${formatDate(minDate)} – ${formatDate(maxDate)}`;
 }
@@ -605,7 +559,7 @@ playBtn.addEventListener('click', () => {
       }
       slider.value = +slider.value + 1;
       render();
-    }, 400);
+    }, 1000);
   }
 });
 
@@ -613,6 +567,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
