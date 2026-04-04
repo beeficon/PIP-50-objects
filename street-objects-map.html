@@ -172,7 +172,7 @@
     flex-direction: column;
     gap: 8px;
   }
-  .filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .filter-label {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -303,7 +303,18 @@
     object-fit: contain;
     border-radius: 12px;
   }
-</style>
+<head>
+  ...
+  <style>
+    .fade-in {
+      opacity: 1;
+      transition: opacity 3s ease-in;
+    }
+    .fade-out {
+      opacity: 0;
+      transition: opacity 3s ease-out;
+    }
+  </style>
 </head>
 <body>
 <div id="app">
@@ -337,6 +348,7 @@
       <span id="count-display">— objects</span>
     </div>
     <div id="map"></div>
+
   </div>
 </div>
 
@@ -483,6 +495,13 @@ function closeSidebar() {
 const markerData = objects.map(obj => {
   const icon = createMarkerIcon(obj);
   const marker = L.marker([obj.lat, obj.lng], { icon });
+  
+  // When the marker is added to the map, find and assign its DOM element
+  marker.on('add', () => {
+    const markerEl = document.querySelector(`.leaflet-marker-icon[data-name="${obj.name}"]`);
+    obj.element = markerEl; // Store for fade effect
+  });
+  
   marker.on('click', () => openSidebar(obj));
   return { marker, obj };
 });
@@ -528,15 +547,35 @@ function render() {
     const inMat  = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
 
     if (inTime && inCat && inMat) {
-      if (!map.hasLayer(marker)) marker.addTo(map);
+      if (!map.hasLayer(marker)) {
+        marker.addTo(map);
+        // Fade in
+        if (obj.element) {
+          obj.element.classList.remove('fade-out');
+          obj.element.classList.add('fade-in');
+        }
+      }
       visible++;
     } else {
-      if (map.hasLayer(marker)) marker.remove();
+      if (map.hasLayer(marker)) {
+        // Fade out
+        if (obj.element) {
+          obj.element.classList.remove('fade-in');
+          obj.element.classList.add('fade-out');
+          // Remove marker after fade-out
+          setTimeout(() => {
+            if (map.hasLayer(marker)) {
+              marker.remove();
+            }
+          }, 3000); // duration matches CSS transition
+        } else {
+          marker.remove();
+        }
+      }
     }
   });
 
-  document.getElementById('count-display').textContent =
-    `${visible} object${visible !== 1 ? 's' : ''} visible`;
+document.getElementById('count-display').textContent = `${visible} objects`;
   document.getElementById('header-sub').textContent =
     `${objects.length} objects · ${formatDate(minDate)} – ${formatDate(maxDate)}`;
 }
@@ -566,7 +605,7 @@ playBtn.addEventListener('click', () => {
       }
       slider.value = +slider.value + 1;
       render();
-    }, 120);
+    }, 400);
   }
 });
 
@@ -574,6 +613,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
