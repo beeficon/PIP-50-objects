@@ -48,9 +48,9 @@
 
 .sidebar-collapse:hover { color: var(--text); }
   }
-  #sidebar.open { width: 320px; }
+  #sidebar.open { width: 400px; }
   .sidebar-content {
-    padding: 20px;
+    padding: 30px;
     min-height: 100%;
   }
   .sidebar-close {
@@ -85,16 +85,16 @@
   }
   .sidebar-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 700;
-    margin-top: 30px;
-    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     color: var(--text);
   }
   .sidebar-detail {
     margin-bottom: 12px;
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-size: 15px;
     line-height: 1.6;
   }
   .sidebar-detail-label {
@@ -106,6 +106,8 @@
     color: var(--text);
     margin-top: 2px;
   }
+
+  
   .sidebar-tag {
     display: inline-block;
     padding: 4px 10px;
@@ -351,13 +353,13 @@ function d(str) {
 
 const objects = [
   { name:'bucket',              category:'construction', lat:51.46399, lng:-0.03989, found:d('28/01/2026'), missing:d('09/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026.png' },
-  { name:'traffic cone',        category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png' },
+  { name:'traffic cone',        category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png'},
   { name:'wooden cabinet',      category:'furniture',    lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026.png' },
   { name:'chandelier',          category:'homeware',     lat:51.4657, lng:-0.04921, found:d('28/01/2026'), missing:d('12/02/2026'), material:'glass, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026.png' },
   { name:'sofa',                category:'furniture',    lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
   { name:'mattress',            category:'furniture',    lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png' },
   { name:'painting',            category:'panel',        lat:51.46489, lng:-0.04423, found:d('28/01/2026'), missing:d('16/02/2026'), material:'wood, acrylic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026.png' },
-  { name:'traffic cones',        category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png' },
+  { name:'traffic cones',        category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png' },
   { name:'tshirt',              category:'clothing',     lat:51.46417, lng:-0.04048, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026.png' },
   { name:'toilet',              category:'furniture',    lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
   { name:'magic whip',          category:'rubbish',      lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026.png' },
@@ -466,12 +468,9 @@ function openSidebar(obj) {
       <div class="sidebar-detail-label">Duration</div>
       <div class="sidebar-detail-value">${Math.ceil((obj.missing - obj.found) / 86400000)} days</div>
     </div>
-    <div class="sidebar-detail">
-      <div class="sidebar-detail-label">Material</div>
-      <div class="sidebar-detail-value">${obj.material}</div>
-    </div>
     <div>
       <span class="sidebar-tag">${obj.category}</span>
+      <span class="sidebar-tag">${obj.material}</span>
     </div>
   `;
   
@@ -576,4 +575,5 @@ render();
 </script>
 </body>
 </html>
+
 
