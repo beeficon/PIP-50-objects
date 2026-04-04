@@ -326,7 +326,7 @@ function d(str) {
 const objects = [
   { name:'bucket',              category:'construction', lat:51.46399, lng:-0.03989, found:d('28/01/2026'), missing:d('09/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026.png' },
   { name:'traffic cone',        category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png'},
-  { name:'cabinet',             category:'furniture',    lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026.png' },
+  { name:'wooden cabinet',      category:'furniture',    lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026.png' },
   { name:'chandelier',          category:'homeware',     lat:51.4657, lng:-0.04921, found:d('28/01/2026'), missing:d('12/02/2026'), material:'glass, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026.png' },
   { name:'sofa',                category:'furniture',    lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
   { name:'mattress',            category:'furniture',    lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png' },
@@ -343,11 +343,11 @@ const objects = [
   { name:'bin bags',            category:'rubbish',      lat:51.46507, lng:-0.04588, found:d('04/02/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
   { name:'sofa part',           category:'furniture',    lat:51.46619, lng:-0.05005, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
   { name:'granny trolley',      category:'luggage',      lat:51.46627, lng:-0.05017, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium, fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png' },
-  { name:'box',                 category:'misc',         lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026.png' },
-  { name:'cigarette box',       category:'rubbish',      lat:51.466, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026.png' },
-  { name:'planks',              category:'panel',        lat:51.46455, lng:-0.04366, found:d('09/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026.png' },
-  { name:'panels',              category:'panel',        lat:51.46458, lng:-0.04376, found:d('09/02/2026'), missing:d('25/02/2026'), material:'marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026.png' },
-  { name:'planks',              category:'panel',        lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026.png' },
+  { name:'microwave-esque box', category:'misc',         lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026.png' },
+  { name:'empty packet of cigs',category:'rubbish',      lat:51.466, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026.png' },
+  { name:'wooden planks',       category:'panel',        lat:51.46455, lng:-0.04366, found:d('09/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026.png' },
+  { name:'marble panels',       category:'panel',        lat:51.46458, lng:-0.04376, found:d('09/02/2026'), missing:d('25/02/2026'), material:'marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026.png' },
+  { name:'wooden planks',       category:'panel',        lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026.png' },
   { name:'suitcase',            category:'luggage',      lat:51.46629, lng:-0.05037, found:d('12/02/2026'), missing:d('16/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026.png' },
   { name:'balloon',             category:'misc',         lat:51.46531, lng:-0.04619, found:d('12/02/2026'), missing:d('16/02/2026'), material:'latex, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png' },
   { name:'royal mail box',      category:'misc',         lat:51.46518, lng:-0.04565, found:d('12/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-12022026.png' },
@@ -365,7 +365,7 @@ const objects = [
   { name:'key',                 category:'misc',         lat:51.46494, lng:-0.04468, found:d('18/02/2026'), missing:d('25/02/2026'), material:'brass', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026.png' },
   { name:'spiderman lampshades',category:'homeware',     lat:51.46451, lng:-0.04354, found:d('25/02/2026'), missing:d('02/03/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026.png' },
   { name:'sewing pattern',      category:'misc',         lat:51.46475, lng:-0.04461, found:d('25/02/2026'), missing:d('02/03/2026'), material:'paper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026.png' },
-  { name:'cabinet',             category:'furniture',    lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026.png' },
+  { name:'white cabinet',       category:'furniture',    lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026.png' },
   { name:'bin bags',            category:'rubbish',      lat:51.4651, lng:-0.04538, found:d('25/02/2026'), missing:d('05/03/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026.png' },
   { name:'pallet',              category:'construction', lat:51.4642, lng:-0.04095, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026.png' },
   { name:'frying pan',          category:'homeware',     lat:51.46597, lng:-0.04966, found:d('25/02/2026'), missing:d('02/03/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png' },
@@ -384,7 +384,7 @@ const ICON_EMOJI = {
 
 const allDates = objects.flatMap(o => [o.found, o.missing]);
 const minDate = new Date(Math.min(...allDates));
-const maxDate = new Date(Math.max(...allDates));
+const maxDate = new Date(2026, 2, 2); // end at 2 March 2026
 const totalDays = Math.round((maxDate - minDate) / 86400000);
 
 const slider = document.getElementById('timeline');
@@ -513,7 +513,8 @@ function render() {
       }
       visible++;
     } else {
-      if (map.hasLayer(marker)) {
+      const atEnd = +slider.value >= totalDays;
+      if (map.hasLayer(marker) && !atEnd) {
         if (obj.element) {
           obj.element.classList.remove('fade-in');
           obj.element.classList.add('fade-out');
