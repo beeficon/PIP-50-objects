@@ -1,39 +1,257 @@
-.hover-title {
-    display: inline;
-    pointer-events: auto;
-    cursor: pointer;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Objects</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.hover-image {
-    visibility: hidden;
-}
+  :root {
+    --bg: #f5f2ec;
+    --text: #1a1a1a;
+    --muted: #888;
+  }
 
-body:not(.mobile) .hover-title:hover + .hover-image {
-    visibility: visible;
-    pointer-events: none;
-}
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
 
-.hover-image {
+  #title-screen {
+    width: 100%;
+    height: 100vh;
     display: flex;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    pointer-events: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    user-select: none;
+  }
 
-/* Change width and height to scale images */
-    width: 90vw;
-    height: 90vh;
+  #title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    line-height: 0.88;
+  }
+
+  .title-word {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .letter-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+  }
+
+  /* Space character */
+  .letter-wrap.space {
+    width: 0.28em;
+  }
+
+  .letter-text,
+  .letter-img {
+    display: block;
+    font-size: clamp(60px, 10vw, 140px);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+    transition: opacity 0.18s ease;
+  }
+
+  .letter-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.75em;
+    height: 0.75em;
+    object-fit: contain;
+    opacity: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.10));
+  }
+
+  .letter-wrap:not(.space):hover .letter-text {
+    opacity: 0;
+  }
+
+  .letter-wrap:not(.space):hover .letter-img {
+    opacity: 1;
+  }
+
+  /* Subtitle */
+  #subtitle {
+    margin-top: 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 1.1vw, 13px);
+    color: var(--muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  /* Scroll hint */
+  #scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bob 2.4s ease-in-out infinite;
+  }
+
+  #scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 32px;
+    background: var(--muted);
+    opacity: 0.5;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+</style>
+</head>
+<body>
+
+<div id="title-screen">
+  <div id="title-wrap">
+    <div class="title-word" id="word-street"></div>
+    <div class="title-word" id="word-objects"></div>
+  </div>
+  <div id="subtitle">Brockley, SE4 — Jan – Mar 2026</div>
+  <div id="scroll-hint">scroll</div>
+</div>
+
+<script>
+const IMAGES = [
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cushions-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-16022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/table-12022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bath-16022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-02032026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026.png',
+];
+
+// Shuffle a copy of IMAGES and return an index-cycling picker per letter
+function makePicker() {
+  // Each letter gets its own shuffled queue
+  let queue = [...IMAGES].sort(() => Math.random() - 0.5);
+  let i = 0;
+  return function next() {
+    const img = queue[i % queue.length];
+    i++;
+    // Reshuffle when we've gone through all
+    if (i % queue.length === 0) {
+      queue = [...IMAGES].sort(() => Math.random() - 0.5);
+    }
+    return img;
+  };
 }
 
-.hover-image img {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-    margin-bottom: 0;
+function buildWord(containerId, text) {
+  const container = document.getElementById(containerId);
+  for (const char of text) {
+    const wrap = document.createElement('div');
+    wrap.className = 'letter-wrap' + (char === ' ' ? ' space' : '');
+
+    if (char !== ' ') {
+      const span = document.createElement('span');
+      span.className = 'letter-text';
+      span.textContent = char;
+
+      const img = document.createElement('img');
+      img.className = 'letter-img';
+      img.alt = char;
+
+      const pick = makePicker();
+
+      // Set initial image
+      img.src = pick();
+
+      // On each hover, swap to the next image
+      wrap.addEventListener('mouseenter', () => {
+        img.src = pick();
+      });
+
+      wrap.appendChild(span);
+      wrap.appendChild(img);
+    }
+
+    container.appendChild(wrap);
+  }
 }
+
+buildWord('word-street', 'STREET');
+buildWord('word-objects', 'OBJECTS');
+</script>
+</body>
+</html>
