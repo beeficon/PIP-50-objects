@@ -6,20 +6,20 @@
 <title>Street Objects</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f5f2ec;
+    --bg: #ffffff;
     --surface: #edeae2;
     --border: #d4cfc4;
-    --text: #1a1814;
-    --text-muted: #6b6760;
-    --accent: #2d4a3e;
-    --accent-light: #4a7a67;
-    --pill-active-bg: #1a1814;
+    --text: #363636;
+    --text-muted: #6E6B6B;
+    --accent: #919191;
+    --accent-light: #B0ABAB;
+    --pill-active-bg: #363636;
     --pill-active-text: #f5f2ec;
-    --pill-bg: #edeae2;
+    --pill-bg: #EDEBEB;
     --pill-border: #c4bfb4;
   }
   html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
@@ -29,9 +29,24 @@
     background: var(--bg);
     border-right: 1px solid var(--border);
     overflow-y: auto;
-    transition: width 0.3s ease;
-    flex-shrink: 0;
+    transition: width 0.4s ease;
+    flex-shrink: 5;
     z-index: 100;
+`}
+    .sidebar-collapse {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer; 
+  color: var(--text-muted);
+  transition: color 0.15s;
+  z-index: 101;
+
+
+.sidebar-collapse:hover { color: var(--text); }
   }
   #sidebar.open { width: 320px; }
   .sidebar-content {
@@ -53,23 +68,26 @@
   .sidebar-image {
     width: 100%;
     border-radius: 6px;
-    border: 1px solid var(--border);
-    margin-bottom: 16px;
-    background: var(--surface);
+    border: 5px
+    margin-bottom: 15px;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 200px;
+
   }
   .sidebar-image img {
+     margin-top: 30px;
     max-width: 100%;
-    max-height: 250px;
+    max-height: 500px;
     object-fit: contain;
   }
   .sidebar-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 30px;
     margin-bottom: 12px;
     color: var(--text);
   }
@@ -98,6 +116,25 @@
     margin-top: 8px;
     margin-right: 6px;
     font-family: 'DM Mono', monospace;
+
+
+  <button class="sidebar-collapse" onclick="closeSidebar()">⇦</button><var></var>
+
+  .sidebar-collapse {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.15s;
+  z-index: 101; /* Make sure it's above other elements */
+}
+
+.sidebar-collapse:hover { color: var(--text); }
+
   }
   #main {
     flex: 1;
@@ -247,30 +284,23 @@
     background: rgba(245,242,236,0.85) !important;
   }
   .map-marker {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
-}
-
-.map-marker.is-fading-in {
-  opacity: 0;
-  transform: scale(0.92);
-}
-
-.map-marker.is-fading-out {
-  opacity: 0;
-  transform: scale(0.92);
-  pointer-events: none;
-}
-
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    transition: all 0.15s;
+  }
+  .map-marker:hover {
+    transform: scale(1.5);
+  }
+  .map-marker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
   }
 </style>
 </head>
@@ -278,13 +308,14 @@
 <div id="app">
   <div id="sidebar">
     <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+<button class="sidebar-collapse" onclick="closeSidebar()">⇦</button>
     <div class="sidebar-content">
       <div id="sidebar-body"></div>
     </div>
   </div>
   <div id="main">
     <div id="header">
-      <h1>Street Objects — Field Map</h1>
+      <h1>Street Objects</h1>
       <p id="header-sub">loading…</p>
     </div>
     <div id="filters">
@@ -455,14 +486,8 @@ const markerData = objects.map(obj => {
   const icon = createMarkerIcon(obj);
   const marker = L.marker([obj.lat, obj.lng], { icon });
   marker.on('click', () => openSidebar(obj));
-  return {
-    marker,
-    obj,
-    visible: false,
-    fadeTimer: null
-  };
+  return { marker, obj };
 });
-
 
 let activeCat = 'all';
 let activeMat = 'all';
@@ -473,49 +498,6 @@ const allMaterials = [...new Set(
 
 const categories = ['all', ...new Set(objects.map(o => o.category))];
 const materials  = ['all', ...allMaterials];
-
- function fadeInMarker(item) {
-  if (item.fadeTimer) {
-    clearTimeout(item.fadeTimer);
-    item.fadeTimer = null;
-  }
-
-  if (!map.hasLayer(item.marker)) {
-    item.marker.addTo(map);
-  }
-
-  requestAnimationFrame(() => {
-    const el = item.marker.getElement();
-    if (!el) return;
-    el.classList.remove('is-fading-out');
-    el.classList.add('is-fading-in');
-    requestAnimationFrame(() => {
-      el.classList.remove('is-fading-in');
-    });
-  });
-
-  item.visible = true;
-}
-
-function fadeOutMarker(item) {
-  const el = item.marker.getElement();
-
-  if (!el) {
-    if (map.hasLayer(item.marker)) map.removeLayer(item.marker);
-    item.visible = false;
-    return;
-  }
-
-  el.classList.add('is-fading-out');
-  item.visible = false;
-
-  item.fadeTimer = setTimeout(() => {
-    if (map.hasLayer(item.marker) && !item.visible) {
-      map.removeLayer(item.marker);
-    }
-    item.fadeTimer = null;
-  }, 350);
-}
 
 function buildPills(containerId, items, getCurrent, onClick) {
   const wrap = document.getElementById(containerId);
@@ -542,29 +524,18 @@ function render() {
   document.getElementById('date-display').textContent = formatDate(current);
 
   let visible = 0;
-
-  markerData.forEach(item => {
-    const { marker, obj } = item;
+  markerData.forEach(({ marker, obj }) => {
     const inTime = obj.found <= current && obj.missing > current;
-    const inCat = activeCat === 'all' || obj.category === activeCat;
-    const inMat = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
-    const shouldShow = inTime && inCat && inMat;
+    const inCat  = activeCat === 'all' || obj.category === activeCat;
+    const inMat  = activeMat === 'all' || obj.material.toLowerCase().includes(activeMat);
 
-    if (shouldShow) {
-      if (!item.visible) fadeInMarker(item);
+    if (inTime && inCat && inMat) {
+      if (!map.hasLayer(marker)) marker.addTo(map);
       visible++;
     } else {
-      if (item.visible) fadeOutMarker(item);
+      if (map.hasLayer(marker)) marker.remove();
     }
   });
-
-  document.getElementById('count-display').textContent =
-    `${visible} object${visible !== 1 ? 's' : ''}`;
-
-  document.getElementById('header-sub').textContent =
-    `${objects.length} objects · ${formatDate(minDate)} – ${formatDate(maxDate)}`;
-}
-
 
   document.getElementById('count-display').textContent =
     `${visible} object${visible !== 1 ? 's' : ''} visible`;
@@ -605,3 +576,4 @@ render();
 </script>
 </body>
 </html>
+
