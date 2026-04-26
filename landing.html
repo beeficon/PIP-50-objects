@@ -7,21 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
 
   :root {
     --bg: #ffffff;
     --text: #1a1a1a;
     --muted: #888;
+    --default-cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+    --click-cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
   }
 
-html, body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  overflow: hidden;
-  cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
-}
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    cursor: var(--default-cursor);
   }
 
   #title-screen {
@@ -53,6 +55,7 @@ html, body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: var(--default-cursor);
   }
 
   .letter-wrap.space {
@@ -68,7 +71,6 @@ html, body {
     letter-spacing: -0.03em;
     color: var(--text);
     line-height: 1;
-
   }
 
   .letter-img {
@@ -84,18 +86,16 @@ html, body {
     filter: drop-shadow(0 2px 8px rgba(0,0,0,0.10));
   }
 
+  .letter-wrap:not(.space):hover {
+    cursor: var(--click-cursor);
+  }
+
   .letter-wrap:not(.space):hover .letter-text {
     opacity: 0;
   }
 
   .letter-wrap:not(.space):hover .letter-img {
     opacity: 1;
-  }
-
-
-  @keyframes bob {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    40% { transform: translateX(-40%) translateY(6px); }
   }
 </style>
 </head>
@@ -106,21 +106,7 @@ html, body {
     <div class="title-word" id="word-street"></div>
     <div class="title-word" id="word-objects"></div>
   </div>
-
-<script>
-buildWord('word-street', 'STREET');
-buildWord('word-objects', 'OBJECTS');
-
-document.getElementById('word-street').style.cursor = 'pointer';
-document.getElementById('word-objects').style.cursor = 'pointer';
-
-document.getElementById('word-street').addEventListener('click', () => {
-  window.location.href = 'main.html';
-});
-document.getElementById('word-objects').addEventListener('click', () => {
-  window.location.href = 'main.html';
-});
-</script>
+</div>
 
 <script>
 const IMAGES = [
@@ -173,17 +159,15 @@ const IMAGES = [
   'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-02032026.png',
   'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026.png',
   'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026.png',
-  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026.png',
+  'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026.png'
 ];
 
-// shuffle all images and cycle through per individual letter
 function makePicker() {
   let queue = [...IMAGES].sort(() => Math.random() - 0.5);
   let i = 0;
   return function next() {
     const img = queue[i % queue.length];
     i++;
-    // after all images looked at, reshuffle
     if (i % queue.length === 0) {
       queue = [...IMAGES].sort(() => Math.random() - 0.5);
     }
@@ -191,8 +175,11 @@ function makePicker() {
   };
 }
 
+const pick = makePicker();
+
 function buildWord(containerId, text) {
   const container = document.getElementById(containerId);
+
   for (const char of text) {
     const wrap = document.createElement('div');
     wrap.className = 'letter-wrap' + (char === ' ' ? ' space' : '');
@@ -205,16 +192,7 @@ function buildWord(containerId, text) {
       const img = document.createElement('img');
       img.className = 'letter-img';
       img.alt = char;
-
-      const pick = makePicker();
-
-      // first image set
       img.src = pick();
-
-      // cycle through image bank after each
-      wrap.addEventListener('mouseenter', () => {
-        img.src = pick();
-      });
 
       wrap.appendChild(span);
       wrap.appendChild(img);
@@ -227,16 +205,31 @@ function buildWord(containerId, text) {
 buildWord('word-street', 'STREET');
 buildWord('word-objects', 'OBJECTS');
 
-// make font clickable
-document.getElementById('word-street').style.cursor = 'pointer';
-document.getElementById('word-objects').style.cursor = 'pointer';
-
 document.getElementById('word-street').addEventListener('click', () => {
   window.location.href = 'main.html';
 });
+
 document.getElementById('word-objects').addEventListener('click', () => {
   window.location.href = 'main.html';
+});
 
-  });
+const defaultCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png";
+const clickCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png";
+
+document.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('.letter-wrap:not(.space)')) {
+    document.body.style.cursor = `url('${clickCursor}') 32 32, auto`;
+  }
+});
+
+document.addEventListener('pointerup', () => {
+  document.body.style.cursor = `url('${defaultCursor}') 32 32, auto`;
+});
+
+document.addEventListener('pointerleave', () => {
+  document.body.style.cursor = `url('${defaultCursor}') 32 32, auto`;
+});
 </script>
+
 </body>
+</html>
