@@ -105,7 +105,21 @@
     <div class="title-word" id="word-street"></div>
     <div class="title-word" id="word-objects"></div>
   </div>
+  
+<script>
+buildWord('word-street', 'STREET');
+buildWord('word-objects', 'OBJECTS');
 
+document.getElementById('word-street').style.cursor = 'pointer';
+document.getElementById('word-objects').style.cursor = 'pointer';
+
+document.getElementById('word-street').addEventListener('click', () => {
+  window.location.href = 'main.html';
+});
+document.getElementById('word-objects').addEventListener('click', () => {
+  window.location.href = 'main.html';
+});
+</script>
 
 <script>
 const IMAGES = [
@@ -161,15 +175,14 @@ const IMAGES = [
   'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026.png',
 ];
 
-// Shuffle a copy of IMAGES and return an index-cycling picker per letter
+// shuffle all images and cycle through per individual letter
 function makePicker() {
-  // Each letter gets its own shuffled queue
   let queue = [...IMAGES].sort(() => Math.random() - 0.5);
   let i = 0;
   return function next() {
     const img = queue[i % queue.length];
     i++;
-    // Reshuffle when we've gone through all
+    // after all images looked at, reshuffle
     if (i % queue.length === 0) {
       queue = [...IMAGES].sort(() => Math.random() - 0.5);
     }
