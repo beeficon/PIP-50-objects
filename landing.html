@@ -105,7 +105,7 @@
     <div class="title-word" id="word-street"></div>
     <div class="title-word" id="word-objects"></div>
   </div>
-  
+
 <script>
 buildWord('word-street', 'STREET');
 buildWord('word-objects', 'OBJECTS');
@@ -207,10 +207,10 @@ function buildWord(containerId, text) {
 
       const pick = makePicker();
 
-      // Set initial image
+      // first image set
       img.src = pick();
 
-      // On each hover, swap to the next image
+      // cycle through image bank after each
       wrap.addEventListener('mouseenter', () => {
         img.src = pick();
       });
@@ -225,6 +225,17 @@ function buildWord(containerId, text) {
 
 buildWord('word-street', 'STREET');
 buildWord('word-objects', 'OBJECTS');
+
+// make font clickable
+document.getElementById('word-street').style.cursor = 'pointer';
+document.getElementById('word-objects').style.cursor = 'pointer';
+
+document.getElementById('word-street').addEventListener('click', () => {
+  window.location.href = 'main.html';
+});
+document.getElementById('word-objects').addEventListener('click', () => {
+  window.location.href = 'main.html';
+
+  });
 </script>
 </body>
-</html>
