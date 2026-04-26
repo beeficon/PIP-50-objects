@@ -27,13 +27,23 @@
   }
 
   html, body {
-    height: 100%;
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow: hidden;
-    cursor: var(--cursor-default);
-  }
+  height: 100%;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  cursor: var(--cursor-default);
+}
+
+body {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+body.loaded {
+  opacity: 1;
+}
+  
 
   body.cursor-alt,
   body.cursor-alt * {
@@ -448,6 +458,10 @@ function createMarkerIcon(obj) {
   });
 }
 
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+});
+
 function openSidebar(obj) {
   const sidebarBody = document.getElementById('sidebar-body');
 
@@ -509,6 +523,7 @@ function buildPills(containerId, items, getCurrent, onClick) {
       onClick(item);
       wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
+
       render();
     };
     wrap.appendChild(btn);
@@ -609,7 +624,6 @@ render();
 </script>
 </body>
 </html>
-
 
 
 
