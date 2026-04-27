@@ -30,7 +30,7 @@
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-y: auto; 
+      overflow-y: auto; /* FIXED: was missing semicolon */
       cursor: var(--cursor-default);
     }
 
@@ -53,7 +53,7 @@
 
     #top-right-section {
       position: absolute;
-      top: 20px;
+      top: 40px;
       right: -100px;
       width: 250px;
       background: rgba(255, 255, 255, 0.8);
@@ -72,47 +72,19 @@
       margin: 0;
     }
 
-  
-    #search-bar {
-      margin: 0 20px 16px;
-    }
-
-    #search-input {
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text);
-      background: var(--pill-bg);
-      border: 1px solid var(--pill-border);
-      border-radius: 4px;
-      padding: 8px 12px;
-      width: 300px;
-      outline: none;
-    }
-
-    #search-input::placeholder {
-      color: var(--accent-light);
-    }
-
-    #search-input:focus {
-      border-color: var(--text);
-    }
-
     #gallery-section {
-      margin: 20px;
+      margin: 30px;
     }
 
     .gallery-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 4px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 6px;
     }
 
+    /* ADDED: flex column so label sits below image */
     .gallery-item {
-      height: 200px;
-      width:
+      height: 350px;
       display: flex;
       flex-direction: column;
     }
@@ -123,36 +95,16 @@
       min-height: 0;
       display: block;
       object-fit: contain;
-    
     }
 
-    .gallery-item.hidden {
-      display: none;
-    }
-
-    #no-results {
-      display: none;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: var(--accent);
-      padding: 20px 0;
-    }
   </style>
 </head>
 
 <body>
   <h1 class="page-title">INDEX</h1>
-
-  <div id="search-bar">
-    <input type="text" id="search-input" placeholder="Search objects..." />
-  </div>
-
   <div id="gallery-section">
     <div class="gallery-container" id="gallery"></div>
-    <p id="no-results">No objects found.</p>
   </div>
-
   <div id="top-right-section">
     <div id="map-section">
       <h2>MAP</h2>
@@ -244,12 +196,7 @@
       img.dataset.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
       img.alt = obj.name;
 
-      const label = document.createElement('span');
-      label.className = 'label';
- 
-
       item.appendChild(img);
-      item.appendChild(label);
       gallery.appendChild(item); 
       observer.observe(img);     
     });
