@@ -82,13 +82,6 @@
       gap: 6px;
     }
 
-    /* ADDED: flex column so label sits below image */
-    .gallery-item {
-      height: 350px;
-      display: flex;
-      flex-direction: column;
-    }
-
     .gallery-item img {
       width: 100%;
       flex: 1;
@@ -132,7 +125,7 @@
       { name:'cushion', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cushions-04022026-negative.png' },
       { name:'tyre parts', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026-negative.png' },
       { name:'sofa', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026-negative.png' },
-      { name:'boxes', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png' },
+      { name:'seat', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/seat-04022026-negative.png' },
       { name:'bin bags', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026-negative.png' },
       { name:'sofa part', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026-negative.png' },
       { name:'granny trolley', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-2-negative.png' },
@@ -187,19 +180,34 @@
       rootMargin: '200px'
     });
 
-    objects.forEach(obj => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
-      item.dataset.name = obj.name;
+   objects.forEach(obj => {
+  const item = document.createElement('div');
+  item.className = 'gallery-item';
+  item.dataset.name = obj.name;
 
-      const img = document.createElement('img');
-      img.dataset.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
-      img.alt = obj.name;
+  const img = document.createElement('img');
+  const negativeSrc = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
+  const positiveSrc = obj.image; 
 
-      item.appendChild(img);
-      gallery.appendChild(item); 
-      observer.observe(img);     
-    });
+  img.dataset.src = negativeSrc;
+  img.alt = obj.name;
+
+  img.onload = () => {
+  const preload = new Image();
+  preload.src = positiveSrc;
+};
+
+  item.addEventListener('mouseenter', () => {
+    if (img.src) img.src = positiveSrc;
+  });
+  item.addEventListener('mouseleave', () => {
+    if (img.src) img.src = negativeSrc;
+  });
+
+  item.appendChild(img);
+  gallery.appendChild(item);
+  observer.observe(img);
+});
 
     document.getElementById('search-input').addEventListener('input', function () {
       const query = this.value.toLowerCase().trim();
