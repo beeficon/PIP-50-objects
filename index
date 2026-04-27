@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>INDEX</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +30,7 @@
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-y: auto; /* FIXED: was missing semicolon */
+      overflow-y: auto;
       cursor: var(--cursor-default);
     }
 
@@ -89,10 +89,8 @@
       display: block;
       object-fit: contain;
     }
-
   </style>
 </head>
-
 <body>
   <h1 class="page-title">INDEX</h1>
   <div id="gallery-section">
@@ -108,7 +106,6 @@
   </div>
 
   <script>
-
     const objects = [
       { name:'bucket', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026-negative.png' },
       { name:'traffic cone', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026-negative.png' },
@@ -162,17 +159,22 @@
       { name:'suitcase', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png' },
     ];
 
+    // Sort objects alphabetically
     objects.sort((a, b) => a.name.localeCompare(b.name));
 
     const gallery = document.getElementById('gallery');
-    const noResults = document.getElementById('no-results');
 
+    const defaultCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png";
+    const clickCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png";
+
+    // IntersectionObserver for lazy loading
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
-          img.loading = 'lazy'; 
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+          }
           observer.unobserve(img);
         }
       });
@@ -180,53 +182,45 @@
       rootMargin: '200px'
     });
 
-   objects.forEach(obj => {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-  item.dataset.name = obj.name;
+    // Create gallery items
+    objects.forEach(obj => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.dataset.name = obj.name;
 
-  const img = document.createElement('img');
-  const negativeSrc = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
-  const positiveSrc = obj.image; 
+      const img = document.createElement('img');
 
-  img.dataset.src = negativeSrc;
-  img.alt = obj.name;
+      // Generate negative and positive sources
+      const negativeSrc = obj.image; // initial image
+      const positiveSrc = obj.image.replace('-negative', ''); // assume positive is just original
 
-  img.onload = () => {
-  const preload = new Image();
-  preload.src = positiveSrc;
-};
+      // Set dataset for lazy loading
+      img.dataset.src = negativeSrc;
+      img.dataset.positiveSrc = positiveSrc;
 
-  item.addEventListener('mouseenter', () => {
-    if (img.src) img.src = positiveSrc;
-  });
-  item.addEventListener('mouseleave', () => {
-    if (img.src) img.src = negativeSrc;
-  });
+      // Set initial src
+      img.src = negativeSrc;
+      img.loading = 'lazy';
 
-  item.appendChild(img);
-  gallery.appendChild(item);
-  observer.observe(img);
-});
+      // Preload positive image
+      const preload = new Image();
+      preload.src = positiveSrc;
 
-    document.getElementById('search-input').addEventListener('input', function () {
-      const query = this.value.toLowerCase().trim();
-      const items = gallery.querySelectorAll('.gallery-item');
-      let visibleCount = 0;
-
-      items.forEach(item => {
-        const name = item.dataset.name.toLowerCase();
-        if (name.includes(query)) {
-          item.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          item.classList.add('hidden');
-        }
+      // Add hover events for image swap and cursor change
+      item.addEventListener('mouseenter', () => {
+        if (img.dataset.positiveSrc) img.src = img.dataset.positiveSrc;
+        document.body.style.cursor = `url('${clickCursor}') 32 32, auto`;
+      });
+      item.addEventListener('mouseleave', () => {
+        if (img.dataset.src) img.src = img.dataset.src;
+        document.body.style.cursor = `url('${defaultCursor}') 32 32, auto`;
       });
 
-      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      // Append image and observe for lazy loading
+      item.appendChild(img);
+      gallery.appendChild(item);
+      observer.observe(img);
     });
-
   </script>
 </body>
 </html>
