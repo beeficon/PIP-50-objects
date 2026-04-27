@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -30,7 +30,7 @@ x<!DOCTYPE html>
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-y: auto
+      overflow-y: auto; /* FIXED: was missing semicolon */
       cursor: var(--cursor-default);
     }
 
@@ -72,6 +72,34 @@ x<!DOCTYPE html>
       margin: 0;
     }
 
+    /* ADDED: search bar */
+    #search-bar {
+      margin: 0 20px 16px;
+    }
+
+    #search-input {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      border-radius: 4px;
+      padding: 8px 12px;
+      width: 300px;
+      outline: none;
+    }
+
+    #search-input::placeholder {
+      color: var(--accent-light);
+    }
+
+    #search-input:focus {
+      border-color: var(--text);
+    }
+
     #gallery-section {
       margin: 20px;
     }
@@ -79,24 +107,65 @@ x<!DOCTYPE html>
     .gallery-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
+      gap: 4px;
+    }
+
+    /* ADDED: flex column so label sits below image */
+    .gallery-item {
+      height: 150px;
+      display: flex;
+      flex-direction: column;
     }
 
     .gallery-item img {
       width: 100%;
-      height: 100%
+      flex: 1;
+      min-height: 0;
       display: block;
-        object-fit: contain;
-}
-    
+      object-fit: contain;
+    }
+
+    /* ADDED: label */
+    .gallery-item .label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 4px 2px 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ADDED: hide items that don't match search */
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    /* ADDED: no results message */
+    #no-results {
+      display: none;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 20px 0;
+    }
   </style>
 </head>
 
 <body>
   <h1 class="page-title">INDEX</h1>
 
+  <!-- ADDED: search bar -->
+  <div id="search-bar">
+    <input type="text" id="search-input" placeholder="Search objects..." />
+  </div>
+
   <div id="gallery-section">
     <div class="gallery-container" id="gallery"></div>
+    <p id="no-results">No objects found.</p>
   </div>
 
   <div id="top-right-section">
@@ -163,37 +232,61 @@ x<!DOCTYPE html>
       { name:'suitcase', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png' },
     ];
 
- objects.sort((a, b) => a.name.localeCompare(b.name));
- 
+    objects.sort((a, b) => a.name.localeCompare(b.name));
+
     const gallery = document.getElementById('gallery');
- 
+    const noResults = document.getElementById('no-results');
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
           img.src = img.dataset.src;
-          img.onload = () => img.classList.add('loaded');
-          img.onerror = () => img.classList.add('loaded'); 
+          img.loading = 'lazy'; 
           observer.unobserve(img);
         }
       });
     }, {
-      rootMargin: '200px' 
+      rootMargin: '200px'
     });
- 
+
     objects.forEach(obj => {
       const item = document.createElement('div');
       item.className = 'gallery-item';
- 
+      item.dataset.name = obj.name;
+
       const img = document.createElement('img');
       img.dataset.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
       img.alt = obj.name;
- 
-      observer.observe(img);
- 
+
+      const label = document.createElement('span');
+      label.className = 'label';
+      label.textContent = obj.name;
+
       item.appendChild(img);
-      gallery.appendChild(item);
+      item.appendChild(label);
+      gallery.appendChild(item); 
+      observer.observe(img);     
     });
+
+    document.getElementById('search-input').addEventListener('input', function () {
+      const query = this.value.toLowerCase().trim();
+      const items = gallery.querySelectorAll('.gallery-item');
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const name = item.dataset.name.toLowerCase();
+        if (name.includes(query)) {
+          item.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+
   </script>
 </body>
 </html>
