@@ -150,11 +150,33 @@ body.loaded {
     color: var(--text);
   }
   #header p {
-    font-size: 11px;
+    font-size: 11px; and 
     color: var(--text-muted);
     margin-top: 2px;
     font-family: 'DM Mono', monospace;
-  }
+}
+    #top-right-section {
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 200;
+}
+
+#top-right-section h2 {
+  margin-bottom: -10px;
+  font-size: 1.5em;
+}
+
+#top-right-section p {
+  font-size: 2em;
+  margin: 0;
+}
+
+  
   #filters {
     padding: 10px 20px;
     border-bottom: 1px solid var(--border);
@@ -214,6 +236,7 @@ body.loaded {
     color: var(--text);
     min-width: 90px;
     flex-shrink: 0;
+
   }
   #play-btn {
     font-family: 'DM Mono', monospace;
@@ -349,6 +372,14 @@ body.loaded {
       <span id="count-display">— objects</span>
     </div>
     <div id="map"></div>
+    <div id="top-right-section">
+  <div id="index-section">
+    <h2>INDEX</h2>
+  </div>
+  <div id="about-section" style="margin-top: 10px;">
+    <h2>ABOUT</h2>
+  </div>
+</div>
   </div>
 </div>
 
@@ -624,6 +655,13 @@ render();
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
