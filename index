@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INDEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --surface: #edeae2;
+      --border: #d4cfc4;
+      --text: #363636;
+      --text-muted: #6E6B6B;
+      --accent: #919191;
+      --accent-light: #B0ABAB;
+      --pill-active-bg: #363636;
+      --pill-active-text: #f5f2ec;
+      --pill-bg: #EDEBEB;
+      --pill-border: #c4bfb4;
+      --cursor-default: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+      --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      cursor: var(--cursor-default);
+    
+    }
+
+    body.cursor-alt,
+    body.cursor-alt * {
+      cursor: var(--cursor-alt) !important;
+    }
+    .page-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 75px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+      text-align: left;
+      margin: 20px 0;
+
+}
+    .page-title {
+    padding: 14px 20px 10px;
+    background: var(--bg);
+    flex-shrink: 0;
+
+    }
+
+  </style>
+</head>
+<body>
+  <h1 class="page-title">INDEX</h1>
+  
+  <div>
+
+  </div>
+</body>
+</html>
