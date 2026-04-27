@@ -20,6 +20,28 @@
       --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
     }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>INDEX</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --text: #363636;
+      --text-muted: #6E6B6B;
+      --cursor-default: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+      --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
+    }
+
     html, body {
       height: 100%;
       font-family: 'DM Sans', sans-serif;
@@ -68,17 +90,17 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      text-align: center;
+      text-align: start;
       opacity: 0;
       transition: opacity 0.2s ease;
       pointer-events: none;
     }
 
     .overlay .title {
-      margin: 20px;
-      tex-align: left;
+      margin: 0px;
+      text-align: left;
       font-weight: 400;
-      font-size: 25px;
+      font-size: 50px;
       font-family: 'DM Mono', monospace;
       color: var(--text);
 }
