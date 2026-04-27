@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INDEX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet">
-  
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -30,83 +32,147 @@
       color: var(--text);
       overflow: hidden;
       cursor: var(--cursor-default);
-    
     }
 
     body.cursor-alt,
     body.cursor-alt * {
       cursor: var(--cursor-alt) !important;
     }
+
     .page-title {
-      font-family: 'DM Sans', sans-serif;
       font-size: 75px;
       font-weight: 700;
       text-transform: uppercase;
       color: var(--text);
       text-align: left;
       margin: 20px 0;
-
-}
-    .page-title {
-    padding: 14px 20px 10px;
-    background: var(--bg);
-    flex-shrink: 0;
-
+      padding: 14px 20px 10px;
+      background: var(--bg);
+      flex-shrink: 0;
     }
+
     #top-right-section {
-  position: absolute;
-  top: 20px;
-  right: -100px;
-  width: 250px;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  border-radius: 8px;
-  z-index: 200;
-}
+      position: absolute;
+      top: 20px;
+      right: -100px;
+      width: 250px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 200;
+    }
 
-#top-right-section h2 {
-  margin-bottom: -10px;
-  font-size: 1.5em;
-}
+    #top-right-section h2 {
+      margin-bottom: -10px;
+      font-size: 1.5em;
+    }
 
-#top-right-section p {
-  font-size: 2em;
-  margin: 0;
-}
+    #top-right-section p {
+      font-size: 2em;
+      margin: 0;
+    }
 
+    #gallery-section {
+      margin: 20px;
+    }
 
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
 
 <body>
   <h1 class="page-title">INDEX</h1>
-  </style>
-</head>
-<body>
-<div id="app">
-    </div>
-    <div id="gallery-section" style="margin: 20px;">
-  <div class="gallery-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-    <!-- Images will go here -->
-    <img src="YOUR_IMAGE_LINK_1" style="width: 100%; height: auto; border-radius: 8px;">
-    <img src="YOUR_IMAGE_LINK_2" style="width: 100%; height: auto; border-radius: 8px;">
-    <!-- Add more images as needed -->
-  </div>
-</div>
-    <div id="top-right-section">
-  <div id="map-section">
-    <h2>MAP</h2>
-  </div>
-  <div id="about-section" style="margin-top: 10px;">
-    <h2>ABOUT</h2>
-  </div>
-  
-</div>
-  </div>
-</div>
-  
-  <div>
 
+  <div id="gallery-section">
+    <div class="gallery-container" id="gallery"></div>
   </div>
+
+  <div id="top-right-section">
+    <div id="map-section">
+      <h2>MAP</h2>
+    </div>
+    <div id="about-section" style="margin-top: 10px;">
+      <h2>ABOUT</h2>
+    </div>
+  </div>
+
+  <script>
+    const objects = [
+      { name:'bucket', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026-negative.png' },
+      { name:'traffic cone', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026-negative.png' },
+      { name:'wooden cabinet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026-2-negative.png' },
+      { name:'chandelier', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026-negative.png' },
+      { name:'sofa', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026-negative.png' },
+      { name:'mattress', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026-negative.png' },
+      { name:'painting', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026-negative.png' },
+      { name:'traffic cones', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026-negative.png' },
+      { name:'tshirt', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026-negative.png' },
+      { name:'toilet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026-negative.png' },
+      { name:'magic whip', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magic_whip-04022026-negative.png' },
+      { name:'mirror', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-04022026-negative.png' },
+      { name:'cushion', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cushions-04022026-negative.png' },
+      { name:'tyre parts', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026-negative.png' },
+      { name:'sofa', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026-negative.png' },
+      { name:'boxes', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png' },
+      { name:'bin bags', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026-negative.png' },
+      { name:'sofa part', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026-negative.png' },
+      { name:'granny trolley', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-2-negative.png' },
+      { name:'microwave-esque box', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026-negative.png' },
+      { name:'empty packet of cigs', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026-negative.png' },
+      { name:'wooden planks', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026-negative.png' },
+      { name:'marble panels', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026-negative.png' },
+      { name:'wooden planks', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026-negative.png' },
+      { name:'suitcase', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026-negative.png' },
+      { name:'balloon', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026-negative.png' },
+      { name:'royal mail box', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-12022026-negative.png' },
+      { name:'bin bags', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-12022026-negative.png' },
+      { name:'chair', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026-negative.png' },
+      { name:'cabinet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-16022026-negative.png' },
+      { name:'bowl', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026-negative.png' },
+      { name:'table', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/table-12022026-negative.png' },
+      { name:'baby bath', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bath-16022026-negative.png' },
+      { name:'egg carton', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026-negative.png' },
+      { name:'lamp', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026-negative.png' },
+      { name:'pot', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026-negative.png' },
+      { name:'wheel trimming', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026-negative.png' },
+      { name:'motherboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026-negative.png' },
+      { name:'key', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026-negative.png' },
+      { name:'spiderman lampshades', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026-negative.png' },
+      { name:'sewing pattern', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026-negative.png' },
+      { name:'white cabinet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-negative.png' },
+      { name:'bin bags', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026-negative.png' },
+      { name:'pallet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026-negative.png' },
+      { name:'frying pan', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026-negative.png' },
+      { name:'bowls', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026-negative.png' },
+      { name:'pallet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-02032026-negative.png' },
+      { name:'blue boxes', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png' },
+      { name:'mirror', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-negative.png' },
+      { name:'suitcase', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png' },
+    ];
+
+    const gallery = document.getElementById('gallery');
+
+    objects.forEach(obj => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+
+      const img = document.createElement('img');
+      img.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
+      img.alt = obj.name;
+
+      item.appendChild(img);
+      gallery.appendChild(item);
+    });
+  </script>
 </body>
 </html>
