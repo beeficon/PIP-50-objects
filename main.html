@@ -591,15 +591,15 @@ function render() {
       const atEnd = +slider.value >= totalDays;
       if (map.hasLayer(marker) && !atEnd) {
         if (obj.element) {
-          obj.element.classList.remove('fade-in');
-          obj.element.classList.add('fade-out');
-          setTimeout(() => {
-            if (map.hasLayer(marker)) {
-              marker.remove();
-            }
-          }, 300);
-        } else {
-          marker.remove();
+obj.element.classList.remove('fade-in');
+obj.element.classList.add('fade-out');
+const handleTransitionEnd = () => {
+  if (map.hasLayer(marker)) {
+    marker.remove();
+  }
+  obj.element.removeEventListener('transitionend', handleTransitionEnd);
+};
+obj.element.addEventListener('transitionend', handleTransitionEnd);
         }
       }
     }
@@ -655,6 +655,21 @@ render();
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
