@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+x<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -30,7 +30,7 @@
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow: hidden;
+      overflow-y: auto
       cursor: var(--cursor-default);
     }
 
@@ -84,9 +84,11 @@
 
     .gallery-item img {
       width: 100%;
-      height: auto;
+      height: 100%
       display: block;
-    }
+        object-fit: contain;
+}
+    
   </style>
 </head>
 
@@ -107,6 +109,7 @@
   </div>
 
   <script>
+
     const objects = [
       { name:'bucket', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026-negative.png' },
       { name:'traffic cone', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026-negative.png' },
@@ -149,27 +152,45 @@
       { name:'key', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026-negative.png' },
       { name:'spiderman lampshades', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026-negative.png' },
       { name:'sewing pattern', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026-negative.png' },
-      { name:'white cabinet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-negative.png' },
+      { name:'white cabinet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-2-negative.png' },
       { name:'bin bags', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026-negative.png' },
       { name:'pallet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026-negative.png' },
       { name:'frying pan', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026-negative.png' },
       { name:'bowls', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026-negative.png' },
       { name:'pallet', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-02032026-negative.png' },
       { name:'blue boxes', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png' },
-      { name:'mirror', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-negative.png' },
+      { name:'mirror', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-2-negative.png' },
       { name:'suitcase', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png' },
     ];
 
+ objects.sort((a, b) => a.name.localeCompare(b.name));
+ 
     const gallery = document.getElementById('gallery');
-
+ 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.onload = () => img.classList.add('loaded');
+          img.onerror = () => img.classList.add('loaded'); 
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '200px' 
+    });
+ 
     objects.forEach(obj => {
       const item = document.createElement('div');
       item.className = 'gallery-item';
-
+ 
       const img = document.createElement('img');
-      img.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
+      img.dataset.src = obj.image.replace(/(\.png)$/i, '-negative$1').replace('-negative-negative', '-negative');
       img.alt = obj.name;
-
+ 
+      observer.observe(img);
+ 
       item.appendChild(img);
       gallery.appendChild(item);
     });
