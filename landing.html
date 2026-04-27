@@ -205,10 +205,12 @@ function buildWord(containerId, text) {
 buildWord('word-street', 'STREET');
 buildWord('word-objects', 'OBJECTS');
 
+document.getElementById('word-street').style.cursor = 'pointer';
+document.getElementById('word-objects').style.cursor = 'pointer';
+
 document.getElementById('word-street').addEventListener('click', () => {
   window.location.href = 'main.html';
 });
-
 document.getElementById('word-objects').addEventListener('click', () => {
   window.location.href = 'main.html';
 });
