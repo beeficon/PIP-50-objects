@@ -53,11 +53,57 @@
     flex-shrink: 0;
 
     }
+    #top-right-section {
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 200;
+}
+
+#top-right-section h2 {
+  margin-bottom: -10px;
+  font-size: 1.5em;
+}
+
+#top-right-section p {
+  font-size: 2em;
+  margin: 0;
+}
+
 
   </style>
 </head>
+
 <body>
   <h1 class="page-title">INDEX</h1>
+  </style>
+</head>
+<body>
+<div id="app">
+    </div>
+    <div id="gallery-section" style="margin: 20px;">
+  <div class="gallery-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+    <!-- Images will go here -->
+    <img src="YOUR_IMAGE_LINK_1" style="width: 100%; height: auto; border-radius: 8px;">
+    <img src="YOUR_IMAGE_LINK_2" style="width: 100%; height: auto; border-radius: 8px;">
+    <!-- Add more images as needed -->
+  </div>
+</div>
+    <div id="top-right-section">
+  <div id="map-section">
+    <h2>MAP</h2>
+  </div>
+  <div id="about-section" style="margin-top: 10px;">
+    <h2>ABOUT</h2>
+  </div>
+  
+</div>
+  </div>
+</div>
   
   <div>
 
