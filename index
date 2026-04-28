@@ -20,28 +20,6 @@
       --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
     }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>INDEX</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #ffffff;
-      --text: #363636;
-      --text-muted: #6E6B6B;
-      --cursor-default: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
-      --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
-    }
-
     html, body {
       height: 100%;
       font-family: 'DM Sans', sans-serif;
@@ -64,25 +42,23 @@
       margin: 30px;
     }
 
-    .gallery-item {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+   .gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
 
     .gallery-item:hover {
       transform: scale(0.75);
       object-fit: contain;
     }
 
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+  .gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
    .overlay {
   position: absolute;
@@ -102,8 +78,8 @@
   min-width: 0;
   text-align: left;
   font-family: 'DM Mono', monospace;
-  font-size: clamp(14px, 1.6vw, 22px);
-  line-height: 1.05;
+  font-size: clamp(60px, 1.6vw, 50px);
+  line-height: 0.7;
   color: var(--text);
   overflow-wrap: anywhere;
 }
@@ -113,11 +89,27 @@
   min-width: 0;
   text-align: right;
   font-family: 'DM Mono', monospace;
-  font-size: clamp(12px, 1.4vw, 18px);
-  line-height: 1.15;
+  font-size: clamp(25px, 1.4vw, 25px);
+  line-height: 1.3;
   color: var(--text-muted);
   overflow-wrap: anywhere;
 }
+
+    #top-right-section {
+      position: absolute;
+      top: 30px;
+      right: -100px;
+      width: 250px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 200;
+    }
+
+    #top-right-section h2 {
+      margin-bottom: -10px;
+      font-size: 1.5em;
+    }
 
   </style>
 </head>
@@ -125,6 +117,14 @@
 <body>
   <h1 class="page-title">INDEX</h1>
   <div class="gallery-container" id="gallery"></div>
+    <div id="top-right-section">
+    <div id="map-section">
+      <h2>MAP</h2>
+    </div>
+    <div id="about-section" style="margin-top: 10px;">
+      <h2>ABOUT</h2>
+    </div>
+  </div>
 
 <script>
 const d = (x) => x;
@@ -158,7 +158,7 @@ const objects = [
 
   { name:'tyre parts', category:'vehicle', lat:51.46621, lng:-0.05076, found:d('04/02/2026'), missing:d('09/02/2026'), material:'rubber', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026-negative.png', info:'Fragments of rubber vehicle tyres.' },
 
-  { name:'sofa (alt)', category:'furniture', lat:51.46509, lng:-0.04529, found:d('04/02/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026-negative.png', info:'Second variation of upholstered seating.' },
+  { name:'sofa', category:'furniture', lat:51.46509, lng:-0.04529, found:d('04/02/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026-negative.png', info:'Second variation of upholstered seating.' },
 
   { name:'seat', category:'furniture', lat:51.46500, lng:-0.04490, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/seat-04022026-negative.png', info:'Single-person seating unit.' },
 
@@ -170,13 +170,13 @@ const objects = [
 
   { name:'microwave-esque box', category:'misc', lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026-negative.png', info:'Box resembling a small microwave unit.' },
 
-  { name:'empty packet of cigs', category:'rubbish', lat:51.46600, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026-negative.png', info:'Discarded cigarette packaging.' },
+  { name:'cigarette box', category:'rubbish', lat:51.46600, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026-negative.png', info:'Discarded cigarette packaging.' },
 
   { name:'wooden planks', category:'panel', lat:51.46455, lng:-0.04366, found:d('09/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026-negative.png', info:'Raw timber construction planks.' },
 
   { name:'marble panels', category:'panel', lat:51.46458, lng:-0.04376, found:d('09/02/2026'), missing:d('25/02/2026'), material:'marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026-negative.png', info:'Stone slab panels used in construction.' },
 
-  { name:'wooden planks (alt)', category:'panel', lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026-negative.png', info:'Second set of timber planks.' },
+  { name:'wooden planks', category:'panel', lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026-negative.png', info:'Second set of timber planks.' },
 
   { name:'suitcase', category:'luggage', lat:51.46629, lng:-0.05037, found:d('12/02/2026'), missing:d('16/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026-negative.png', info:'Portable travel storage case.' },
 
@@ -222,12 +222,13 @@ const objects = [
 
   { name:'blue boxes', category:'homeware', lat:51.46486, lng:-0.04443, found:d('02/03/2026'), missing:d('05/03/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png', info:'Stacked blue storage boxes.' },
 
-  { name:'mirror (alt)', category:'homeware', lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-2-negative.png', info:'Second mirror variant.' },
+  { name:'mirror', category:'homeware', lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-2-negative.png', info:'Second mirror variant.' },
 
-  { name:'suitcase (alt)', category:'luggage', lat:51.46521, lng:-0.04631, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png', info:'Second travel suitcase.' }
+  { name:'suitcase', category:'luggage', lat:51.46521, lng:-0.04631, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png', info:'Second travel suitcase.' }
 ];
 
-objects.sort((a,b)=>a.name.localeCompare(b.name));
+const defaultCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png";
+const clickCursor = "https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png";
 
 const gallery = document.getElementById('gallery');
 
@@ -243,31 +244,43 @@ objects.forEach(obj => {
   img.dataset.pos = positive;
   img.loading = 'lazy';
 
+  img.style.cursor = `url("${defaultCursor}") 32 32, auto`;
+
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
 
   overlay.innerHTML = `
-    <div class="title">${obj.name}</div>  
-    <div class="desc">${obj.category}</div> 
-    <div class="desc">${obj.material}</div>    
-    <div class="desc">${obj.lat}</div> <div class="desc">${obj.lng}</div>
-     <div class="desc">${obj.found}</div>    
-    <div class="desc">${obj.missing}</div>
-    
+  <div class="title">${obj.name}</div>
+  <div class="desc">
+    ${obj.category}<br>
+    ${obj.material}<br>
+    ${obj.lat}<br>
+    ${obj.lng}<br>
+    ${obj.found}<br>
+    ${obj.missing}
+  </div>
   `;
 
-  item.addEventListener('mouseenter', () => img.src = img.dataset.pos);
-  item.addEventListener('mouseleave', () => img.src = img.dataset.src);
+  item.addEventListener('mouseenter', () => {
+    img.style.cursor = `url("${clickCursor}") 32 32, auto`;
+  });
+  item.addEventListener('mouseleave', () => {
+    img.style.cursor = `url("${defaultCursor}") 32 32, auto`;
+  });
 
   item.addEventListener('click', () => {
     const hidden = img.style.opacity === '0';
     img.style.opacity = hidden ? '1' : '0';
     overlay.style.opacity = hidden ? '0' : '1';
-  });
 
+  });
   item.appendChild(img);
   item.appendChild(overlay);
   gallery.appendChild(item);
+
+});
+  document.getElementById('map-section').addEventListener('click', () => {
+  window.location.href = 'main.html';
 });
 </script>
 
