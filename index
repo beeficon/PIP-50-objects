@@ -241,9 +241,8 @@ objects.forEach(obj => {
 
   img.src = obj.image;
   img.dataset.src = obj.image;
-  img.dataset.pos = positive;
+  img.dataset.hoverSrc = positive;
   img.loading = 'lazy';
-
   img.style.cursor = `url("${defaultCursor}") 32 32, auto`;
 
   const overlay = document.createElement('div');
@@ -262,26 +261,29 @@ objects.forEach(obj => {
   `;
 
   item.addEventListener('mouseenter', () => {
-    img.style.cursor = `url("${clickCursor}") 32 32, auto`;
+    img.src = img.dataset.hoverSrc;
   });
   item.addEventListener('mouseleave', () => {
-    img.style.cursor = `url("${defaultCursor}") 32 32, auto`;
+    img.src = obj.image;
   });
 
   item.addEventListener('click', () => {
     const hidden = img.style.opacity === '0';
     img.style.opacity = hidden ? '1' : '0';
     overlay.style.opacity = hidden ? '0' : '1';
-
   });
+
   item.appendChild(img);
   item.appendChild(overlay);
   gallery.appendChild(item);
-
 });
-  document.getElementById('map-section').addEventListener('click', () => {
+
+document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
 });
+</script>
+</body>
+</html>
 </script>
 
 </body>
