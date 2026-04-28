@@ -84,31 +84,41 @@
       object-fit: contain;
     }
 
-    .overlay {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: start;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .overlay .title {
-      margin: 0px;
-      text-align: left;
-      font-weight: 400;
-      font-size: 50px;
-      font-family: 'DM Mono', monospace;
-      color: var(--text);
+   .overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
-    .overlay .desc {
-      text-align: right;
-      font-weight: 400;
-      font-size: 25px;
-      font-family: 'DM Mono', monospace;
-      color: var(--text-muted);
-    }
+
+.overlay .title {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(14px, 1.6vw, 22px);
+  line-height: 1.05;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.overlay .desc {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(12px, 1.4vw, 18px);
+  line-height: 1.15;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
   </style>
 </head>
 
