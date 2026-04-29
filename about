@@ -52,11 +52,38 @@
     color: var(--text-muted);
     line-height: 1;
   }
+
+    #about-text-2 {
+    position: relative;
+    padding: 20px;
+    margin: 20px auto;
+    width: 100%;
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5em;
+    font-weight: 200;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
+    #about-text-3 {
+    position: relative;
+    padding: 20px;
+    margin: 20px auto;
+    width: 100%;
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5em;
+    font-weight: 200;
+    color: var(--text-muted);
+    line-height: 1;
+  }
+
   #image-container {
-    position: relative; /* changed to relative for proper positioning of images */
+    position: absolute; /* overlay on top of the text */
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none; /* allow clicks to pass through */
     z-index: 10;
   }
   .draggable-image {
@@ -71,11 +98,18 @@
 </head>
 <body>
 <h1 class="page-title">ABOUT</h1>
+ <div id="top-right-section">
+      <h2>MAP</h2>
+    </div>
+    <div id="top-right-section-2"></div>
+      <h2>INDEX</h2>
+    </div>
+  </div>
 <div id="about-text">
   <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15-minute walk from my house.</h2>
-  <div id="about-text">
+ <div id="about-text-2">
   <h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entire experiment.</h2>
- <div id="about-text">
+   <div id="about-text-3">
   <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.</h2>
   <div id="image-container"></div>
 </div>
@@ -103,8 +137,7 @@ let currentDraggedImage = null;
 let offsetX = 0;
 let offsetY = 0;
 
-// Generate random positions for each image
-objects.forEach((obj, index) => {
+objects.forEach((obj) => {
   const img = document.createElement('img');
   img.src = obj.image;
   img.className = 'draggable-image';
@@ -119,26 +152,23 @@ objects.forEach((obj, index) => {
   img.style.left = `${randomLeft}px`;
   img.style.position = 'absolute';
 
-  // Mouse down to start dragging
+
   img.addEventListener('mousedown', (e) => {
     currentDraggedImage = img;
     offsetX = e.clientX - parseFloat(img.style.left);
     offsetY = e.clientY - parseFloat(img.style.top);
-    img.style.zIndex = 1000; // bring to front
+    img.style.zIndex = 1000; 
   });
 
   container.appendChild(img);
 });
 
-// Mouse move moves the current dragged image
 document.addEventListener('mousemove', (e) => {
   if (currentDraggedImage) {
     currentDraggedImage.style.left = `${e.clientX - offsetX}px`;
     currentDraggedImage.style.top = `${e.clientY - offsetY}px`;
   }
 });
-
-// Mouse up to stop dragging
 document.addEventListener('mouseup', () => {
   if (currentDraggedImage) {
     currentDraggedImage.style.zIndex = '';
@@ -147,4 +177,4 @@ document.addEventListener('mouseup', () => {
 });
 </script>
 </body>
-</html>
+</html></html>
