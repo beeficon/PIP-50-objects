@@ -51,6 +51,8 @@
     width: 100%;
     font-family: 'DM Mono', monospace;
     font-size: 4em;
+    font-weight: 200;
+    color: var(--text-muted);
     line-height: 1;
   }
   #image-container {
@@ -64,7 +66,7 @@
   }
   .draggable-image {
     position: absolute;
-    width: 30%;
+    width: 20%;
     height: auto;
     cursor: grab;
     pointer-events: auto;
@@ -75,7 +77,7 @@
 <body>
 <h1 class="page-title">ABOUT</h1>
 <div id="about-text">
-  <h2>This project is about mapping and being conscious of unconscious parts of our streets.</h2>
+  <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook, I found</h2>
   <div id="image-container"></div>
 </div>
 <script>
@@ -88,7 +90,7 @@ const objects = [
   { name: 'lamp', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026.png' },
   { name: 'bowls', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026.png' },
   { name: 'balloon', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png' },
-  { name: 'granny trolley', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-2.png' },
+  { name: 'granny trolley', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png' },
   { name: 'sofa part', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
   { name: 'bin bags', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
   { name: 'toilet', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' }
@@ -104,6 +106,8 @@ objects.forEach((obj, index) => {
   img.style.left = `${50 + index * 50}px`;
   img.draggable = true;
   img.loading = 'lazy';
+
+
 
   img.addEventListener('dragstart', (e) => {
     e.dataTransfer.setData('text/plain', index);
