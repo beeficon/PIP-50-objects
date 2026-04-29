@@ -1,39 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ABOUT</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
- <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #ffffff;
-      --text: #363636;
-      --text-muted: #6E6B6B;
-      --cursor-default: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
-      --cursor-alt: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      cursor: var(--cursor-default);
-    }
-
-    .page-title {
-      font-size: 75px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin: 20px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ABOUT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --text: #363636;
+    --text-muted: #6E6B6B;
+    --cursor-default: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    cursor: var(--cursor-default);
+  }
+  .page-title {
+    font-size: 75px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 20px;
+      }
 
     #top-right-section {
       position: absolute;
@@ -48,38 +42,91 @@
     #top-right-section h2 {
       margin-bottom: -10px;
       font-size: 1.5em;
-}
-
- #about-text {
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  font-family: 'DM Mono', monospace;
-  font-size: 5em;
-  font-weight: 300;
-  line-height: 0.9;
-  color: var(--text-muted);
-  margin-top: 20px;
-}
-#about-text h2 {
-  margin: 0;
-}  
     
-    
-
-  </style>
+  }
+  #about-text {
+    position: relative;
+    padding: 20px;
+    margin: 20px auto;
+    width: 100%;
+    font-family: 'DM Mono', monospace;
+    font-size: 4em;
+    line-height: 1;
+  }
+  #image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .draggable-image {
+    position: absolute;
+    width: 30%;
+    height: auto;
+    cursor: grab;
+    pointer-events: auto;
+    user-select: none;
+  }
+</style>
 </head>
-
+<body>
 <h1 class="page-title">ABOUT</h1>
 <div id="about-text">
   <h2>This project is about mapping and being conscious of unconscious parts of our streets.</h2>
+  <div id="image-container"></div>
 </div>
-<div class="gallery-container" id="gallery"></div>
-<div id="top-right-section">
-  <div id="map-section">
-    <h2>MAP</h2>
-  </div>
-  <div id="about-section" style="margin-top: 10px;">
-    <h2>INDEX</h2>
-  </div>
-</div>
+<script>
+const objects = [
+  { name: 'chair', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026.png' },
+  { name: 'sofa', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
+  { name: 'wheel trimming', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026.png' },
+  { name: 'motherboard', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026.png' },
+  { name: 'egg carton', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026.png' },
+  { name: 'lamp', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026.png' },
+  { name: 'bowls', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026.png' },
+  { name: 'balloon', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png' },
+  { name: 'granny trolley', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-2.png' },
+  { name: 'sofa part', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
+  { name: 'bin bags', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
+  { name: 'toilet', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' }
+];
+
+const container = document.getElementById('image-container');
+
+objects.forEach((obj, index) => {
+  const img = document.createElement('img');
+  img.src = obj.image;
+  img.className = 'draggable-image';
+  img.style.top = `${50 + index * 50}px`;
+  img.style.left = `${50 + index * 50}px`;
+  img.draggable = true;
+  img.loading = 'lazy';
+
+  img.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', index);
+  });
+
+  container.appendChild(img);
+});
+
+const aboutText = document.getElementById('about-text');
+
+aboutText.addEventListener('dragover', (e) => {
+  e.preventDefault();
+});
+aboutText.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const index = e.dataTransfer.getData('text/plain');
+  const img = container.children[index];
+  const rect = aboutText.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left;
+  const offsetY = e.clientY - rect.top;
+  img.style.top = `${offsetY - img.height/2}px`;
+  img.style.left = `${offsetX - img.width/2}px`;
+});
+</script>
+</body>
+</html>
