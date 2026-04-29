@@ -50,7 +50,7 @@
     margin: 20px auto;
     width: 100%;
     font-family: 'DM Mono', monospace;
-    font-size: 4em;
+    font-size: 2em;
     font-weight: 200;
     color: var(--text-muted);
     line-height: 1;
@@ -77,7 +77,11 @@
 <body>
 <h1 class="page-title">ABOUT</h1>
 <div id="about-text">
-  <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook, I found</h2>
+ <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15 minute walk from my house. </h2>
+<div id="about-text">
+<h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entirety of the experiment.</h2>
+  <div id="about-text">
+ <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.
   <div id="image-container"></div>
 </div>
 <script>
