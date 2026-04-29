@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
+ <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,33 +51,35 @@
 }
 
  #about-text {
-      position: absolute;
-      top: -50px;
-      right: -100px;
-      width: 350px;
-
-
- }
-    #about-text h2 {
-      font-family: 'DM Mono', monospace;
-      font-size: 2.25em;
-      
-    }
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'DM Mono', monospace;
+  font-size: 5em;
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--text-muted);
+  margin-top: 20px;
+}
+#about-text h2 {
+  margin: 0;
+}  
+    
     
 
   </style>
 </head>
 
-<body>
-  <h1 class="page-title">ABOUT</h1>
-  <div class="gallery-container" id="gallery"></div>
-    <div id="top-right-section">
-    <div id="map-section">
-      <h2>MAP</h2>
-    </div>
-    <div id="about-section" style="margin-top: 10px;">
-      <h2>INDEX</h2>
-    </div>
-    <div id="about-text"></div>"
-    <h2>this project is about mapping and being conscious of unconscious</h2>
+<h1 class="page-title">ABOUT</h1>
+<div id="about-text">
+  <h2>This project is about mapping and being conscious of unconscious parts of our streets.</h2>
+</div>
+<div class="gallery-container" id="gallery"></div>
+<div id="top-right-section">
+  <div id="map-section">
+    <h2>MAP</h2>
   </div>
+  <div id="about-section" style="margin-top: 10px;">
+    <h2>INDEX</h2>
+  </div>
+</div>
