@@ -27,22 +27,19 @@
     font-weight: 700;
     text-transform: uppercase;
     margin: 20px;
-      }
-
-    #top-right-section {
-      position: absolute;
-      top: 30px;
-      right: -100px;
-      width: 250px;
-      padding: 10px;
-      border-radius: 8px;
-      z-index: 200;
-    }
-
-    #top-right-section h2 {
-      margin-bottom: -10px;
-      font-size: 1.5em;
-    
+  }
+  #top-right-section {
+    position: absolute;
+    top: 30px;
+    right: -100px;
+    width: 250px;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 200;
+  }
+  #top-right-section h2 {
+    margin-bottom: -10px;
+    font-size: 1.5em;
   }
   #about-text {
     position: relative;
@@ -56,9 +53,7 @@
     line-height: 1;
   }
   #image-container {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative; /* changed to relative for proper positioning of images */
     width: 100%;
     height: 100%;
     pointer-events: none;
@@ -77,11 +72,11 @@
 <body>
 <h1 class="page-title">ABOUT</h1>
 <div id="about-text">
- <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15 minute walk from my house. </h2>
-<div id="about-text">
-<h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entirety of the experiment.</h2>
+  <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15-minute walk from my house.</h2>
   <div id="about-text">
- <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.
+  <h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entire experiment.</h2>
+ <div id="about-text">
+  <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.</h2>
   <div id="image-container"></div>
 </div>
 <script>
@@ -97,43 +92,58 @@ const objects = [
   { name: 'granny trolley', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png' },
   { name: 'sofa part', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
   { name: 'bin bags', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
-  { name: 'toilet', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' }
+  { name: 'toilet', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
+  { name: 'pot', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026.png' },
+  { name: 'pan', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png' }
 ];
 
 const container = document.getElementById('image-container');
 
+let currentDraggedImage = null;
+let offsetX = 0;
+let offsetY = 0;
+
+// Generate random positions for each image
 objects.forEach((obj, index) => {
   const img = document.createElement('img');
   img.src = obj.image;
   img.className = 'draggable-image';
-  img.style.top = `${50 + index * 50}px`;
-  img.style.left = `${50 + index * 50}px`;
-  img.draggable = true;
-  img.loading = 'lazy';
 
+  const maxWidth = window.innerWidth - 100;
+  const maxHeight = window.innerHeight - 100;
 
+  const randomLeft = Math.random() * maxWidth;
+  const randomTop = Math.random() * maxHeight;
 
-  img.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', index);
+  img.style.top = `${randomTop}px`;
+  img.style.left = `${randomLeft}px`;
+  img.style.position = 'absolute';
+
+  // Mouse down to start dragging
+  img.addEventListener('mousedown', (e) => {
+    currentDraggedImage = img;
+    offsetX = e.clientX - parseFloat(img.style.left);
+    offsetY = e.clientY - parseFloat(img.style.top);
+    img.style.zIndex = 1000; // bring to front
   });
 
   container.appendChild(img);
 });
 
-const aboutText = document.getElementById('about-text');
-
-aboutText.addEventListener('dragover', (e) => {
-  e.preventDefault();
+// Mouse move moves the current dragged image
+document.addEventListener('mousemove', (e) => {
+  if (currentDraggedImage) {
+    currentDraggedImage.style.left = `${e.clientX - offsetX}px`;
+    currentDraggedImage.style.top = `${e.clientY - offsetY}px`;
+  }
 });
-aboutText.addEventListener('drop', (e) => {
-  e.preventDefault();
-  const index = e.dataTransfer.getData('text/plain');
-  const img = container.children[index];
-  const rect = aboutText.getBoundingClientRect();
-  const offsetX = e.clientX - rect.left;
-  const offsetY = e.clientY - rect.top;
-  img.style.top = `${offsetY - img.height/2}px`;
-  img.style.left = `${offsetX - img.width/2}px`;
+
+// Mouse up to stop dragging
+document.addEventListener('mouseup', () => {
+  if (currentDraggedImage) {
+    currentDraggedImage.style.zIndex = '';
+    currentDraggedImage = null;
+  }
 });
 </script>
 </body>
