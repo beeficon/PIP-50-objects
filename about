@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
+  "imports": {}
+}</script></head><body>
 
- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ABOUT</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,11 +35,11 @@
   #about-text, #about-text-2, #about-text-3 { position: relative; padding: 20px; margin: 0 auto; width: 100%; font-family: 'DM Mono', monospace; font-size: 3em; font-weight: 200; color: var(--text-muted); line-height: 1; z-index: 5; }
 
   #image-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
-  .draggable-image { position: absolute; width: 20%; height: auto; cursor: grab; pointer-events: auto; user-select: none; }
-  .draggable-image:active { cursor: grabbing; }
+  .draggable-image { position: absolute; width: 20%; height: auto; cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, grab; pointer-events: auto; user-select: none; transition: none; }
+  .draggable-image.is-dragging { cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, grabbing !important; }
 </style>
-</head>
-<body>
+
+
 
 <h1 class="page-title">ABOUT</h1>
 <div id="top-right-section">
@@ -87,11 +90,14 @@ objects.forEach((obj) => {
   img.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
 
   img.addEventListener('mousedown', (e) => {
+    e.preventDefault();
     currentDraggedImage = img;
-    offsetX = e.clientX - img.getBoundingClientRect().left;
-    offsetY = e.clientY - img.getBoundingClientRect().top;
+    // Use the element's current CSS left/top so there's no jump on pickup
+    offsetX = e.pageX - parseFloat(img.style.left || 0);
+    offsetY = e.pageY - parseFloat(img.style.top || 0);
     img.style.zIndex = 1000;
-    document.body.classList.add('cursor-active'); // Switch cursor
+    img.classList.add('is-dragging');
+    document.body.classList.add('cursor-active');
   });
 
   container.appendChild(img);
@@ -99,18 +105,19 @@ objects.forEach((obj) => {
 
 document.addEventListener('mousemove', (e) => {
   if (currentDraggedImage) {
-    currentDraggedImage.style.left = `${e.clientX - offsetX}px`;
-    currentDraggedImage.style.top = `${e.clientY - offsetY}px`;
+    currentDraggedImage.style.left = `${e.pageX - offsetX}px`;
+    currentDraggedImage.style.top = `${e.pageY - offsetY}px`;
   }
 });
 
 document.addEventListener('mouseup', () => {
   if (currentDraggedImage) {
     currentDraggedImage.style.zIndex = '10';
+    currentDraggedImage.classList.remove('is-dragging');
     currentDraggedImage = null;
-    document.body.classList.remove('cursor-active'); // Reset cursor
+    document.body.classList.remove('cursor-active');
   }
 });
 </script>
-</body>
-</html>
+
+<script></script></body></html>
