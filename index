@@ -260,10 +260,8 @@ objects.forEach(obj => {
 
 document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
-
-     document.getElementById('map-section').addEventListener('click', () => {
-  window.location.href = 'main.html';
 });
+
 document.getElementById('about-section').addEventListener('click', () => {
   window.location.href = 'about.html';
 });
