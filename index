@@ -112,20 +112,21 @@
       overflow-wrap: anywhere;
     }
 
-    #top-right-section {
-      position: absolute;
-      top: 30px;
-      right: -100px;
-      width: 250px;
-      padding: 10px;
-      border-radius: 8px;
-      z-index: 200;
-    }
+     #top-right-section {
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  width: 250px;
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 200;
+}
 
-    #top-right-section h2 {
-      margin-bottom: -10px;
-      font-size: 1.5em;
-    }
+#top-right-section h2 {
+  margin-bottom: -10px;
+  font-size: 1.5em;
+}
+  font-size: 1.5em;
 
   </style>
 </head>
@@ -135,17 +136,13 @@
 
   <h1 class="page-title">INDEX</h1>
   <div class="gallery-container" id="gallery"></div>
-  <div id="top-right-section">
-    <div id="map-section">
-      <h2>MAP</h2>
-    </div>
-    <div id="about-section" style="margin-top: 10px;">
-      <h2>ABOUT</h2>
+ <div id="top-right-section">
+    <h2 id="map-section" style="cursor:pointer;">MAP</h2>
+    <h2 id="about-section" style="margin-top: 10px; cursor:pointer;">ABOUT</h2>
     </div>
   </div>
 
 <script>
-// ── Custom cursor ────────────────────────────────────────────────────────────
 const cursor = document.getElementById('custom-cursor');
 
 document.addEventListener('mousemove', e => {
@@ -159,7 +156,6 @@ document.addEventListener('mouseenter', () => { cursor.style.display = 'block'; 
 document.addEventListener('mousedown', () => cursor.classList.add('alt'));
 document.addEventListener('mouseup',   () => cursor.classList.remove('alt'));
 
-// ── Gallery ──────────────────────────────────────────────────────────────────
 const d = (x) => x;
 
 const objects = [
@@ -264,6 +260,14 @@ objects.forEach(obj => {
 
 document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
+
+     document.getElementById('map-section').addEventListener('click', () => {
+  window.location.href = 'main.html';
+});
+document.getElementById('about-section').addEventListener('click', () => {
+  window.location.href = 'about.html';
+});
+
 });
 </script>
 </body>
