@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <style>
+        .nav { position: absolute; top: 10px; right: 10px; }
+        .nav a { margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="main.html" onclick="navigateTo('main.html');">Main</a>
+        <a href="index.html" onclick="navigateTo('index.html');">Index</a>
+    </div>
+    <div class="map-section" onclick="navigateTo('main.html');">Map Section</div>
+    <div class="index-section" onclick="navigateTo('index.html');">Index Section</div>
+
+    <script>
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
