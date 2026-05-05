@@ -354,6 +354,10 @@ body.loaded {
       <h1>Street Objects</h1>
       <p id="header-sub">loading…</p>
     </div>
+     <div id="top-right-section">
+    <h2 id="index-section" style="cursor:pointer;">INDEX</h2>
+    <h2 id="about-section" style="margin-top: 10px; cursor:pointer;">ABOUT</h2>
+</div>
     <div id="filters">
       <div class="filter-row">
         <span class="filter-label">Category</span>
@@ -372,13 +376,6 @@ body.loaded {
       <span id="count-display">— objects</span>
     </div>
     <div id="map"></div>
-    <div id="top-right-section">
-  <div id="index-section">
-    <h2>INDEX</h2>
-  </div>
-  <div id="about-section" style="margin-top: 10px;">
-    <h2>ABOUT</h2>
-  </div>
 </div>
   </div>
 </div>
@@ -518,6 +515,7 @@ function openSidebar(obj) {
       <span class="sidebar-tag">${obj.material}</span>
     </div>
   `;
+  
 
   document.getElementById('sidebar').classList.add('open');
 }
@@ -650,6 +648,12 @@ document.addEventListener('pointerup', () => {
 document.addEventListener('pointerleave', () => {
   document.body.classList.remove('cursor-alt');
 });
+    document.getElementById('index-section').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
+document.getElementById('about-section').addEventListener('click', () => {
+  window.location.href = 'about.html';
+  });
 
 render();
 </script>
