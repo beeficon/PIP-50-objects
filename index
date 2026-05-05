@@ -146,7 +146,6 @@
   </div>
 
 <script>
-// ── Custom cursor ────────────────────────────────────────────────────────────
 const cursor = document.getElementById('custom-cursor');
 
 document.addEventListener('mousemove', e => {
@@ -160,7 +159,6 @@ document.addEventListener('mouseenter', () => { cursor.style.display = 'block'; 
 document.addEventListener('mousedown', () => cursor.classList.add('alt'));
 document.addEventListener('mouseup',   () => cursor.classList.remove('alt'));
 
-// ── Gallery ──────────────────────────────────────────────────────────────────
 const d = (x) => x;
 
 const objects = [
@@ -243,6 +241,14 @@ objects.forEach(obj => {
   </div>
   `;
 
+  document.getElementById('map-section').addEventListener('click', () => {
+  window.location.href = 'main.html';
+});
+
+document.getElementById('about-section').addEventListener('click', () => {
+  window.location.href = 'about.html';
+});
+
   item.addEventListener('mouseenter', () => {
     img.src = img.dataset.hoverSrc;
     cursor.classList.add('alt');
@@ -265,10 +271,251 @@ objects.forEach(obj => {
 
 document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
+  window.location.href = 'about.html';
 });
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
