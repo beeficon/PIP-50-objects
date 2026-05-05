@@ -134,7 +134,7 @@ const objects = [
 
   { name:'traffic cone', category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026-negative.png', info:'Road safety cone used for temporary hazard marking.' },
 
-  { name:'wooden cabinet', category:'furniture', lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026-2-negative.png', info:'Storage cabinet made of wood, domestic furniture piece.' },
+  { name:'wooden cabinet', category:'furniture', lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026-negative.png', info:'Storage cabinet made of wood, domestic furniture piece.' },
 
   { name:'chandelier', category:'homeware', lat:51.4657, lng:-0.04921, found:d('28/01/2026'), missing:d('12/02/2026'), material:'glass, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026-negative.png', info:'Decorative ceiling light fixture with hanging elements.' },
 
@@ -166,7 +166,7 @@ const objects = [
 
   { name:'sofa part', category:'furniture', lat:51.46619, lng:-0.05005, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026-negative.png', info:'Fragment or component of upholstered furniture.' },
 
-  { name:'granny trolley', category:'luggage', lat:51.46627, lng:-0.05017, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium, fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-2-negative.png', info:'Wheeled shopping trolley bag.' },
+  { name:'granny trolley', category:'luggage', lat:51.46627, lng:-0.05017, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium, fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-negative.png', info:'Wheeled shopping trolley bag.' },
 
   { name:'microwave-esque box', category:'misc', lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026-negative.png', info:'Box resembling a small microwave unit.' },
 
@@ -210,7 +210,7 @@ const objects = [
 
   { name:'sewing pattern', category:'misc', lat:51.46475, lng:-0.04461, found:d('25/02/2026'), missing:d('02/03/2026'), material:'paper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026-negative.png', info:'Template used for garment making.' },
 
-  { name:'white cabinet', category:'furniture', lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-2-negative.png', info:'White storage cabinet variant.' },
+  { name:'white cabinet', category:'furniture', lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-negative.png', info:'White storage cabinet variant.' },
 
   { name:'bin bags', category:'rubbish', lat:51.46510, lng:-0.04538, found:d('25/02/2026'), missing:d('05/03/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026-negative.png', info:'Third variation of waste bags.' },
 
@@ -222,7 +222,7 @@ const objects = [
 
   { name:'blue boxes', category:'homeware', lat:51.46486, lng:-0.04443, found:d('02/03/2026'), missing:d('05/03/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png', info:'Stacked blue storage boxes.' },
 
-  { name:'mirror', category:'homeware', lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-2-negative.png', info:'Second mirror variant.' },
+  { name:'mirror', category:'homeware', lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-negative.png', info:'Second mirror variant.' },
 
   { name:'suitcase', category:'luggage', lat:51.46521, lng:-0.04631, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png', info:'Second travel suitcase.' }
 ];
@@ -288,3 +288,33 @@ document.getElementById('map-section').addEventListener('click', () => {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
