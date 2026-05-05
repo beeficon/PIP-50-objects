@@ -150,7 +150,7 @@ const objects = [
 
   { name:'toilet', category:'furniture', lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026-negative.png', info:'Ceramic sanitation fixture.' },
 
-  { name:'magic whip', category:'rubbish', lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magic_whip-04022026-negative.png', info:'Unusual whip-like object with fantastical association.' },
+  { name:'magic whip', category:'rubbish', lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026-negative.png', info:'Unusual whip-like object with fantastical association.' },
 
   { name:'mirror', category:'homeware', lat:51.46489, lng:-0.04423, found:d('04/02/2026'), missing:d('12/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-04022026-negative.png', info:'Reflective glass surface for viewing reflection.' },
 
@@ -288,6 +288,96 @@ document.getElementById('map-section').addEventListener('click', () => {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
