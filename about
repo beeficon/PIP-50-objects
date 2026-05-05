@@ -3,6 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
   "imports": {}
 }</script></head><body>
+<script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script>
 
 
 <meta charset="UTF-8">
@@ -29,8 +31,23 @@
 
   .page-title { font-size: 75px; font-weight: 700; text-transform: uppercase; margin: 20px; }
   
-  #top-right-section { position: absolute; top: 30px; right: -100px; width: 250px; padding: 10px; border-radius: 8px; z-index: 200; }
-  #about-text, #about-text-2, #about-text-3 { position: relative; padding: 20px; margin: 0 auto; width: 100%; font-family: 'DM Mono', monospace; font-size: 3em; color: var(--text-muted); line-height: 1; z-index: 5; }
+     #top-right-section {
+  position: absolute;
+  top: 20px;
+  right: -100px;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 200;
+}
+
+#top-right-section h2 {
+  margin-bottom: -10px;
+  font-size: 1.5em;
+}
+  #about-text, #about-text-2, #about-text-3 
+  { position: relative; padding: 20px; margin: 0 auto; width: 100%; font-family: 'DM Mono', monospace; font-size: 3em; color: var(--text-muted); line-height: 1; z-index: 5; }
 
   #image-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
   .draggable-image { position: absolute; width: 15%; height: auto; cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, grab; pointer-events: auto; user-select: none; transition: none; }
@@ -40,9 +57,9 @@
 
 
 <h1 class="page-title">ABOUT</h1>
-<div id="top-right-section">
-    <h2>MAP</h2>
-    <h2 style="margin-top: 10px;">INDEX</h2>
+ <div id="top-right-section">
+    <h2 id="map-section" style="cursor:pointer;">MAP</h2>
+    <h2 id="index-section" style="margin-top: 10px; cursor:pointer;">INDEX</h2>
 </div>
 
 <div id="about-text">
@@ -115,4 +132,254 @@ document.addEventListener('mouseup', () => {
     currentDraggedImage = null;
     document.body.classList.remove('cursor-active');
   }
+  });
+
+    document.getElementById('map-section').addEventListener('click', () => {
+  window.location.href = 'main.html';
 });
+document.getElementById('index-section').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
+</script><script></script></body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
