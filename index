@@ -1,281 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>INDEX</title>
+<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
+  "imports": {}
+}</script></head><body>
+  
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=Source+Code+Pro&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet" />
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABOUT</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff;
+    --text: #363636;
+    --text-muted: #6E6B6B;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+  }
 
-    :root {
-      --bg: #ffffff;
-      --text: #363636;
-      --text-muted: #6E6B6B;
-    }
+  .cursor-active {
+    cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto !important;
+  }
 
-    html, body {
-      height: 100%;
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      cursor: none;
-    }
+  .page-title { font-size: 75px; font-weight: 700; text-transform: uppercase; margin: 20px; }
+  
+  #top-right-section { position: absolute; top: 30px; right: -100px; width: 250px; padding: 10px; border-radius: 8px; z-index: 200; }
+  #about-text, #about-text-2, #about-text-3 { position: relative; padding: 20px; margin: 0 auto; width: 100%; font-family: 'DM Mono', monospace; font-size: 3em; color: var(--text-muted); line-height: 1; z-index: 5; }
 
-    #custom-cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 64px; height: 64px;
-      background-image: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-32px, -32px);
-      will-change: transform;
-    }
+  #image-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
+  .draggable-image { position: absolute; width: 15%; height: auto; cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, grab; pointer-events: auto; user-select: none; transition: none; }
+  .draggable-image.is-dragging { cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, grabbing !important; }
+</style>
 
-    #custom-cursor.alt {
-      background-image: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png');
-    }
 
-    .page-title {
-      font-size: 75px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin: 20px;
-    }
 
-    .gallery-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 5px;
-      margin: 30px;
-    }
+<h1 class="page-title">ABOUT</h1>
+<div id="top-right-section">
+    <h2>MAP</h2>
+    <h2 style="margin-top: 10px;">INDEX</h2>
+</div>
 
-    .gallery-item {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      cursor: none;
-    }
+<div id="about-text">
+  <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15-minute walk from my house.</h2>
+</div>
+<div id="about-text-2">
+  <h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entire experiment.</h2>
+</div>
+<div id="about-text-3">
+  <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.</h2>
+</div>
+<div id="top-right-section">
+    <a id="map-section" href="main.html"><h2>MAP</h2></a>
+    <a id="index-section" href="index.html" style="margin-top: 10px; display: block;"><h2>INDEX</h2></a>
+</div>
+<div id="image-container"></div>
 
-    .gallery-item:hover {
-      transform: scale(0.75);
-      object-fit: contain;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      cursor: none;
-    }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 12px;
-      padding: 12px;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-
-    .overlay .title {
-      flex: 1;
-      min-width: 0;
-      text-align: left;
-      font-family: 'DM Mono', monospace;
-      font-size: clamp(60px, 1.6vw, 50px);
-      line-height: 0.7;
-      color: var(--text);
-      overflow-wrap: anywhere;
-    }
-
-    .overlay .desc {
-      flex: 1;
-      min-width: 0;
-      text-align: right;
-      font-family: 'DM Mono', monospace;
-      font-size: clamp(25px, 1.4vw, 25px);
-      line-height: 1.3;
-      color: var(--text-muted);
-      overflow-wrap: anywhere;
-    }
-
-    #top-right-section {
-      position: absolute;
-      top: 30px;
-      right: -100px;
-      width: 250px;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      border-radius: 8px;
-      z-index: 200;
-    }
-
-    #top-right-section h2 {
-      margin-bottom: -10px;
-      font-size: 1.5em;
-    }
-
-  </style>
-</head>
-
-<body>
-  <div id="custom-cursor"></div>
-
-  <h1 class="page-title">INDEX</h1>
-  <div class="gallery-container" id="gallery"></div>
-  <div id="top-right-section">
-    <div id="map-section">
-      <h2>MAP</h2>
-    </div>
-    <div id="about-section" style="margin-top: 10px;">
-      <h2>ABOUT</h2>
-    </div>
-  </div>
 
 <script>
-const cursor = document.getElementById('custom-cursor');
-
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top  = e.clientY + 'px';
-});
-
-document.addEventListener('mouseleave', () => { cursor.style.display = 'none'; });
-document.addEventListener('mouseenter', () => { cursor.style.display = 'block'; });
-
-document.addEventListener('mousedown', () => cursor.classList.add('alt'));
-document.addEventListener('mouseup',   () => cursor.classList.remove('alt'));
-
-const d = (x) => x;
-
 const objects = [
-  { name:'bucket', category:'construction', lat:51.46399, lng:-0.03989, found:d('28/01/2026'), missing:d('09/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bucket-280102026-negative.png' },
-  { name:'traffic cone', category:'construction', lat:51.46421, lng:-0.04191, found:d('28/01/2026'), missing:d('04/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cone-28012026-negative.png' },
-  { name:'wooden cabinet', category:'furniture', lat:51.46521, lng:-0.04631, found:d('28/01/2026'), missing:d('09/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-28012026-negative.png' },
-  { name:'chandelier', category:'homeware', lat:51.4657, lng:-0.04921, found:d('28/01/2026'), missing:d('12/02/2026'), material:'glass, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chandelier-28012026-negative.png' },
-  { name:'sofa', category:'furniture', lat:51.46525, lng:-0.04823, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026-negative.png' },
-  { name:'mattress', category:'furniture', lat:51.46595, lng:-0.04951, found:d('28/01/2026'), missing:d('02/03/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-28012026-negative.png' },
-  { name:'painting', category:'panel', lat:51.46489, lng:-0.04423, found:d('28/01/2026'), missing:d('16/02/2026'), material:'wood, acrylic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/painting-28012026-negative.png' },
-  { name:'traffic cones', category:'construction', lat:51.46456, lng:-0.04307, found:d('28/01/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cones-28012026-negative.png' },
-  { name:'tshirt', category:'clothing', lat:51.46417, lng:-0.04048, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tshirt-04022026-negative.png' },
-  { name:'toilet', category:'furniture', lat:51.46458, lng:-0.04376, found:d('04/02/2026'), missing:d('12/02/2026'), material:'ceramic, marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026-negative.png' },
-  { name:'magic whip', category:'rubbish', lat:51.46469, lng:-0.04438, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/magicwhip04022026-negative.png' },
-  { name:'mirror', category:'homeware', lat:51.46489, lng:-0.04423, found:d('04/02/2026'), missing:d('12/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-04022026-negative.png' },
-  { name:'cushion', category:'homeware', lat:51.46494, lng:-0.04448, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cushions-04022026-negative.png' },
-  { name:'tyre parts', category:'vehicle', lat:51.46621, lng:-0.05076, found:d('04/02/2026'), missing:d('09/02/2026'), material:'rubber', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/tyre-04022026-negative.png' },
-  { name:'sofa', category:'furniture', lat:51.46509, lng:-0.04529, found:d('04/02/2026'), missing:d('02/03/2026'), material:'fabric, wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-04022026-negative.png' },
-  { name:'seat', category:'furniture', lat:51.46500, lng:-0.04490, found:d('04/02/2026'), missing:d('09/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/seat-04022026-negative.png' },
-  { name:'bin bags', category:'rubbish', lat:51.46507, lng:-0.04588, found:d('04/02/2026'), missing:d('16/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026-negative.png' },
-  { name:'sofa part', category:'furniture', lat:51.46619, lng:-0.05005, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026-negative.png' },
-  { name:'granny trolley', category:'luggage', lat:51.46627, lng:-0.05017, found:d('04/02/2026'), missing:d('09/02/2026'), material:'aluminium, fabric', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026-negative.png' },
-  { name:'microwave-esque box', category:'misc', lat:51.46455, lng:-0.04359, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-09022026-negative.png' },
-  { name:'cigarette box', category:'rubbish', lat:51.46600, lng:-0.04972, found:d('09/02/2026'), missing:d('12/02/2026'), material:'plastic, card', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cigarettes-09022026-negative.png' },
-  { name:'wooden planks', category:'panel', lat:51.46455, lng:-0.04366, found:d('09/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-09022026-negative.png' },
-  { name:'marble panels', category:'panel', lat:51.46458, lng:-0.04376, found:d('09/02/2026'), missing:d('25/02/2026'), material:'marble', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/slabs-04022026-negative.png' },
-  { name:'wooden planks', category:'panel', lat:51.46463, lng:-0.04426, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/plank-12022026-negative.png' },
-  { name:'suitcase', category:'luggage', lat:51.46629, lng:-0.05037, found:d('12/02/2026'), missing:d('16/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-12022026-negative.png' },
-  { name:'balloon', category:'misc', lat:51.46531, lng:-0.04619, found:d('12/02/2026'), missing:d('16/02/2026'), material:'latex, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026-negative.png' },
-  { name:'royal mail box', category:'misc', lat:51.46518, lng:-0.04565, found:d('12/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/box-12022026-negative.png' },
-  { name:'chair', category:'furniture', lat:51.46449, lng:-0.04259, found:d('16/02/2026'), missing:d('18/02/2026'), material:'wood, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026-negative.png' },
-  { name:'cabinet', category:'furniture', lat:51.46493, lng:-0.04591, found:d('16/02/2026'), missing:d('02/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-16022026-negative.png' },
-  { name:'bowl', category:'homeware', lat:51.46518, lng:-0.04782, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-16022026-negative.png' },
-  { name:'table', category:'furniture', lat:51.46432, lng:-0.04195, found:d('12/02/2026'), missing:d('16/02/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/table-12022026-negative.png' },
-  { name:'baby bath', category:'homeware', lat:51.46567, lng:-0.04902, found:d('16/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bath-16022026-negative.png' },
-  { name:'egg carton', category:'misc', lat:51.46411, lng:-0.04152, found:d('18/02/2026'), missing:d('25/02/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026-negative.png' },
-  { name:'lamp', category:'homeware', lat:51.46435, lng:-0.04264, found:d('18/02/2026'), missing:d('25/02/2026'), material:'aluminium, glass', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026-negative.png' },
-  { name:'pot', category:'homeware', lat:51.46471, lng:-0.04442, found:d('18/02/2026'), missing:d('25/02/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026-negative.png' },
-  { name:'wheel trimming', category:'vehicle', lat:51.46522, lng:-0.04715, found:d('18/02/2026'), missing:d('25/02/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026-negative.png' },
-  { name:'motherboard', category:'misc', lat:51.46527, lng:-0.04691, found:d('18/02/2026'), missing:d('25/02/2026'), material:'fibreglass, copper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026-negative.png' },
-  { name:'key', category:'misc', lat:51.46494, lng:-0.04468, found:d('18/02/2026'), missing:d('25/02/2026'), material:'brass', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/key-18022026-negative.png' },
-  { name:'spiderman lampshades', category:'homeware', lat:51.46451, lng:-0.04354, found:d('25/02/2026'), missing:d('02/03/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lampshades-25022026-negative.png' },
-  { name:'sewing pattern', category:'misc', lat:51.46475, lng:-0.04461, found:d('25/02/2026'), missing:d('02/03/2026'), material:'paper', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pattern-25022026-negative.png' },
-  { name:'white cabinet', category:'furniture', lat:51.46515, lng:-0.04604, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cabinet-25022026-negative.png' },
-  { name:'bin bags', category:'rubbish', lat:51.46510, lng:-0.04538, found:d('25/02/2026'), missing:d('05/03/2026'), material:'plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-25022026-negative.png' },
-  { name:'pallet', category:'construction', lat:51.46420, lng:-0.04095, found:d('25/02/2026'), missing:d('05/03/2026'), material:'wood', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wood-25022026-negative.png' },
-  { name:'frying pan', category:'homeware', lat:51.46597, lng:-0.04966, found:d('25/02/2026'), missing:d('02/03/2026'), material:'aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026-negative.png' },
-  { name:'bowls', category:'homeware', lat:51.46529, lng:-0.04830, found:d('02/03/2026'), missing:d('05/03/2026'), material:'ceramic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026-negative.png' },
-  { name:'blue boxes', category:'homeware', lat:51.46486, lng:-0.04443, found:d('02/03/2026'), missing:d('05/03/2026'), material:'cardboard', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/boxes-02032026-negative.png' },
-  { name:'mirror', category:'homeware', lat:51.46596, lng:-0.04959, found:d('28/01/2026'), missing:d('04/02/2026'), material:'glass, aluminium', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mirror-28012026-negative.png' },
-  { name:'suitcase', category:'luggage', lat:51.46521, lng:-0.04631, found:d('04/02/2026'), missing:d('25/02/2026'), material:'fabric, plastic', image:'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/suitcase-04022026-negative.png' }
+  { name: 'chair', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/chair-16022026.png' },
+  { name: 'sofa', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/sofa-28012026.png' },
+  { name: 'wheel trimming', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/wheel-18022026.png' },
+  { name: 'motherboard', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/motherboard-18022026.png' },
+  { name: 'egg carton', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/eggs-18022026.png' },
+  { name: 'lamp', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/lamp-18022026.png' },
+  { name: 'bowls', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bowl-02032026.png' },
+  { name: 'balloon', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/balloon-12022026.png' },
+  { name: 'granny trolley', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/granny_trolley-04022026.png' },
+  { name: 'sofa part', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/mattress-04022026.png' },
+  { name: 'bin bags', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/bin_bags-04022026.png' },
+  { name: 'toilet', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/toilet-04022026.png' },
+  { name: 'pot', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026.png' },
+  { name: 'pan', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png' }
 ];
+const container = document.getElementById('image-container');
+let currentDraggedImage = null;
+let offsetX = 0;
+let offsetY = 0;
 
-const gallery = document.getElementById('gallery');
-
-objects.forEach(obj => {
-  const item = document.createElement('div');
-  item.className = 'gallery-item';
-
-  const img = document.createElement('img');
-  const positive = obj.image.replace('-negative','');
-
-  img.src = obj.image;
-  img.dataset.src = obj.image;
-  img.dataset.hoverSrc = positive;
-  img.loading = 'lazy';
-
-  const overlay = document.createElement('div');
-  overlay.className = 'overlay';
-
-  overlay.innerHTML = `
-  <div class="title">${obj.name}</div>
-  <div class="desc">
-    ${obj.category}<br>
-    ${obj.material}<br>
-    ${obj.lat}<br>
-    ${obj.lng}<br>
-    ${obj.found}<br>
-    ${obj.missing}
-  </div>
-  `;
-
-  document.getElementById('map-section').addEventListener('click', () => {
-  window.location.href = 'main.html';
-});
-
-document.getElementById('about-section').addEventListener('click', () => {
-  window.location.href = 'about.html';
-});
-
-  item.addEventListener('mouseenter', () => {
-    img.src = img.dataset.hoverSrc;
-    cursor.classList.add('alt');
-  });
-  item.addEventListener('mouseleave', () => {
+window.addEventListener('load', () => {
+  objects.forEach((obj) => {
+    const img = document.createElement('img');
     img.src = obj.image;
-    cursor.classList.remove('alt');
-  });
+    img.className = 'draggable-image';
+    img.style.top = `${Math.random() * (document.body.scrollHeight - 200)}px`;
+    img.style.left = `${Math.random() * (document.body.scrollWidth - 200)}px`;
 
-  item.addEventListener('click', () => {
-    const hidden = img.style.opacity === '0';
-    img.style.opacity = hidden ? '1' : '0';
-    overlay.style.opacity = hidden ? '0' : '1';
-  });
+    img.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      currentDraggedImage = img;
+      offsetX = e.pageX - parseFloat(img.style.left);
+      offsetY = e.pageY - parseFloat(img.style.top);
+      img.style.zIndex = 1000;
+      img.classList.add('is-dragging');
+      document.body.classList.add('cursor-active');
+    });
 
-  item.appendChild(img);
-  item.appendChild(overlay);
-  gallery.appendChild(item);
+    container.appendChild(img);
+  });
 });
 
 document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
-  window.location.href = 'about.html';
 });
-</script>
-</body>
-</html>
+
+document.getElementById('index-section').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (currentDraggedImage) {
+    currentDraggedImage.style.left = `${e.pageX - offsetX}px`;
+    currentDraggedImage.style.top = `${e.pageY - offsetY}px`;
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  if (currentDraggedImage) {
+    currentDraggedImage.style.zIndex = '10';
+    currentDraggedImage.classList.remove('is-dragging');
+    currentDraggedImage = null;
+    document.body.classList.remove('cursor-active');
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
