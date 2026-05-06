@@ -26,7 +26,7 @@
       cursor: none;
     }
 
-    #custom-cursor {
+    #default-cursor {
       position: fixed;
       top: 0; left: 0;
       width: 64px; height: 64px;
@@ -39,8 +39,12 @@
       will-change: transform;
     }
 
-    #custom-cursor.alt {
+    #default-cursor.alt {
       background-image: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png');
+    }
+
+    .page-title, #map-section, #about-section {
+      cursor: pointer;
     }
 
     .page-title {
@@ -62,11 +66,6 @@
       aspect-ratio: 4 / 3;
       overflow: hidden;
       cursor: none;
-    }
-
-    .gallery-item:hover {
-      transform: scale(0.75);
-      object-fit: contain;
     }
 
     .gallery-item img {
@@ -112,50 +111,57 @@
       overflow-wrap: anywhere;
     }
 
-     #top-right-section {
-  position: absolute;
-  top: 20px;
-  right: -100px;
-  width: 250px;
-  padding: 10px;
-  border-radius: 8px;
-  z-index: 200;
-}
+    #top-right-section {
+      position: absolute;
+      top: 20px;
+      right: -100px;
+      width: 250px;
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 200;
+    }
 
-#top-right-section h2 {
-  margin-bottom: -10px;
-  font-size: 1.5em;
-}
-  font-size: 1.5em;
-
+    #top-right-section h2 {
+      margin-bottom: -10px;
+      font-size: 1.5em;
+    }
   </style>
 </head>
 
 <body>
-  <div id="custom-cursor"></div>
+  <div id="default-cursor"></div>
 
   <h1 class="page-title">INDEX</h1>
   <div class="gallery-container" id="gallery"></div>
- <div id="top-right-section">
-    <h2 id="map-section" style="cursor:pointer;">MAP</h2>
-    <h2 id="about-section" style="margin-top: 10px; cursor:pointer;">ABOUT</h2>
-    </div>
+  <div id="top-right-section">
+    <h2 id="map-section">MAP</h2>
+    <h2 id="about-section" style="margin-top: 10px;">ABOUT</h2>
   </div>
 
 <script>
-const cursor = document.getElementById('custom-cursor');
+const cursor = document.getElementById('default-cursor');
 
+// Track cursor position
 document.addEventListener('mousemove', e => {
   cursor.style.left = e.clientX + 'px';
   cursor.style.top  = e.clientY + 'px';
 });
 
+// Hide/show when leaving/entering window
 document.addEventListener('mouseleave', () => { cursor.style.display = 'none'; });
 document.addEventListener('mouseenter', () => { cursor.style.display = 'block'; });
 
+// Alt cursor on click
 document.addEventListener('mousedown', () => cursor.classList.add('alt'));
 document.addEventListener('mouseup',   () => cursor.classList.remove('alt'));
 
+// Hide custom cursor over nav elements so native pointer cursor shows
+document.querySelectorAll('.page-title, #map-section, #about-section').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.style.display = 'none');
+  el.addEventListener('mouseleave', () => cursor.style.display = 'block');
+});
+
+// Gallery
 const d = (x) => x;
 
 const objects = [
@@ -216,7 +222,7 @@ objects.forEach(obj => {
   item.className = 'gallery-item';
 
   const img = document.createElement('img');
-  const positive = obj.image.replace('-negative','');
+  const positive = obj.image.replace('-negative', '');
 
   img.src = obj.image;
   img.dataset.src = obj.image;
@@ -225,25 +231,25 @@ objects.forEach(obj => {
 
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
-
   overlay.innerHTML = `
-  <div class="title">${obj.name}</div>
-  <div class="desc">
-    ${obj.category}<br>
-    ${obj.material}<br>
-    ${obj.lat}<br>
-    ${obj.lng}<br>
-    ${obj.found}<br>
-    ${obj.missing}
-  </div>
+    <div class="title">${obj.name}</div>
+    <div class="desc">
+      ${obj.category}<br>
+      ${obj.material}<br>
+      ${obj.lat}<br>
+      ${obj.lng}<br>
+      ${obj.found}<br>
+      ${obj.missing}
+    </div>
   `;
 
   item.addEventListener('mouseenter', () => {
     img.src = img.dataset.hoverSrc;
     cursor.classList.add('alt');
   });
+
   item.addEventListener('mouseleave', () => {
-    img.src = obj.image;
+    img.src = img.dataset.src;
     cursor.classList.remove('alt');
   });
 
@@ -265,630 +271,9 @@ document.getElementById('map-section').addEventListener('click', () => {
 document.getElementById('about-section').addEventListener('click', () => {
   window.location.href = 'about.html';
 });
-
-});
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
