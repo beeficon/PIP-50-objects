@@ -1,77 +1,115 @@
 <!DOCTYPE html>
-<html lang="en" class=""><head><script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script><script type="importmap">{
-  "imports": {}
-}</script></head><body>
-<script>window.livecodes = window.livecodes || {};</script><title>Untitled Project</title><meta name="title" content="Untitled Project"><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><style id="__livecodes_styles__"></style><script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" async=""></script>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABOUT</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700;900&family=DM+Mono&display=swap" rel="stylesheet" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABOUT</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #ffffff;
-    --text: #363636;
-    --text-muted: #6E6B6B;
-  }
-  html, body {
-    height: 100%;
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
-  }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .cursor-active {
-    cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto !important;
-  }
+    :root {
+      --bg: #ffffff;
+      --text: #363636;
+      --text-muted: #6E6B6B;
+    }
 
-  .page-title { font-size: 75px; font-weight: 700; text-transform: uppercase; margin: 20px; }
-  
-     #top-right-section {
-  position: absolute;
-  top: 20px;
-  right: -100px;
-  width: 250px;
-  padding: 10px;
-  border-radius: 8px;
-  z-index: 200;
-}
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, auto;
+    }
 
-#top-right-section h2 {
-  margin-bottom: -10px;
-  font-size: 1.5em;
-}
-  #about-text, #about-text-2, #about-text-3
-  { position: relative; padding: 20px; margin: 0 auto; width: 100%; font-family: 'DM Mono', monospace; font-size: 3em; color: var(--text-muted); line-height: 1; z-index: 5; }
+    .cursor-active {
+      cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, auto !important;
+    }
 
-  #image-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
-  .draggable-image { position: absolute; width: 15%; height: auto; cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, grab; pointer-events: auto; user-select: none; transition: none; }
-  .draggable-image.is-dragging { cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, grabbing !important; }
-</style>
+    .page-title {
+      font-size: 75px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 20px;
+    }
 
+    #top-right-section {
+      position: absolute;
+      top: 20px;
+      right: -100px;
+      width: 250px;
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 200;
+    }
 
+    #top-right-section h2 {
+      margin-bottom: -10px;
+      font-size: 1.5em;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-<h1 class="page-title">ABOUT</h1>
- <div id="top-right-section">
-    <h2 id="map-section" style="cursor:pointer;">MAP</h2>
-    <h2 id="index-section" style="margin-top: 10px; cursor:pointer;">INDEX</h2>
-</div>
+    #about-text, #about-text-2, #about-text-3 {
+      position: relative;
+      padding: 20px;
+      margin: 0 auto;
+      width: 100%;
+      font-family: 'DM Mono', monospace;
+      font-size: 3em;
+      color: var(--text-muted);
+      line-height: 1;
+      z-index: 5;
+    }
 
-<div id="about-text">
-  <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15-minute walk from my house.</h2>
-</div>
-<div id="about-text-2">
-  <h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entire experiment.</h2>
-</div>
-<div id="about-text-3">
-  <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.</h2>
-</div>
+    #image-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+    }
 
-<div id="image-container"></div>
+    .draggable-image {
+      position: absolute;
+      width: 15%;
+      height: auto;
+      cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%2064x64.png') 32 32, grab;
+      pointer-events: auto;
+      user-select: none;
+      transition: none;
+    }
+
+    .draggable-image.is-dragging {
+      cursor: url('https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/cursor%202%2064x64.png') 32 32, grabbing !important;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="page-title">ABOUT</h1>
+  <div id="top-right-section">
+    <h2 id="map-section">MAP</h2>
+    <h2 id="index-section" style="margin-top: 10px;">INDEX</h2>
+  </div>
+
+  <div id="about-text">
+    <h2>This project is about mapping and being conscious of the unconscious parts of our streets. Over the 8 walks I undertook in the 33-day time span, I found 90+ items just a 15-minute walk from my house.</h2>
+  </div>
+  <div id="about-text-2">
+    <h2>Some of the stuff was brand new and I took them home with me. Some were taken by others, and some were left on the street for the entire experiment.</h2>
+  </div>
+  <div id="about-text-3">
+    <h2>London is overwhelming in its offerings, so much that these little gifts go overlooked. What you need is right in front of you.</h2>
+  </div>
+
+  <div id="image-container"></div>
 
 <script>
 const objects = [
@@ -90,6 +128,7 @@ const objects = [
   { name: 'pot', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pot-18022026.png' },
   { name: 'pan', image: 'https://raw.githubusercontent.com/beeficon/PIP-50-objects/main/pan-25022026.png' }
 ];
+
 const container = document.getElementById('image-container');
 let currentDraggedImage = null;
 let offsetX = 0;
@@ -131,493 +170,18 @@ document.addEventListener('mouseup', () => {
     currentDraggedImage = null;
     document.body.classList.remove('cursor-active');
   }
-  });
+});
 
-    document.getElementById('map-section').addEventListener('click', () => {
+document.getElementById('map-section').addEventListener('click', () => {
   window.location.href = 'main.html';
 });
+
 document.getElementById('index-section').addEventListener('click', () => {
   window.location.href = 'index.html';
 });
-</script><script></script></body></html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</script>
+</body>
+</html>
 
 
 
